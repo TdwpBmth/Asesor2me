@@ -33,12 +33,15 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </form>
-            <form class="form-inline my-2 my-lg-0" style="margin-right:1%;">
-                    <button type="button" class="btn btn-outline-light">Registrase</button>
-                </form>
-            <form class="form-inline my-2 my-lg-0">
-                <button type="button" class="btn btn-outline-primary">Iniciar sesión</button>
-            </form>
+            <div>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                        <button type="button" class="btn btn-outline-light" >Registrase</button> 
+                                        <button type="button" class="btn btn-outline-primary">Iniciar sesión</button>
+                                </li>
+                            </ul>
+            </div>
         </div>
     </nav>
 <section class="listas">

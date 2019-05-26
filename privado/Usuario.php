@@ -1,7 +1,7 @@
 <?php
 require_once "Bd.php";
 require_once "Genericas.php";
-require_once "Aplicacion.php";
+require_once "Mensajes.php";
 
 /**
  * Gestiona lo relacionado con los usuarios.
@@ -14,8 +14,7 @@ class Usuario
     public $nombre;
     public $contrasenia;
     public $tipo;
-    public $genero;
-    public $fechaNacimiento;
+    public $edad;
     public $foto;
     public $activo;
     public $verificado;
@@ -56,13 +55,12 @@ class Usuario
      * @param string $genero
      * @param string $fechaNacimiento
      */
-    public function __construct($correo, $nombre, $contrasenia, $genero, $fechaNacimiento)
+    public function __construct($correo, $nombre, $contrasenia, $edad)
     {
         $this->correo = $correo;
         $this->nombre = $nombre;
         $this->contrasenia = $contrasenia;
-        $this->genero = $genero;
-        $this->fechaNacimiento = $fechaNacimiento;
+        $this->edad = $edad;
     }    
 
     /**
@@ -99,18 +97,14 @@ class Usuario
      */
     public static function verificarCorreo($codigoVerificacion) {
         $resultado = self::EXITO;
-
         $conexion = Bd::obtenerConexion();
-        
         $stmt = $conexion->prepare("SELECT id, verificado, TIMESTAMPDIFF(".self::FORMATO_VIGENCIA_COD_VERIFICACION.", fecha_hora_registro, NOW()) AS tiempo_transcurrido FROM usuarios WHERE codigo_verificacion = ?");
 
         $stmt->bind_param('s', $codigoVerificacion);
         $stmt->execute();
         $stmt->bind_result($id, $verificado, $tiempoTranscurrido);
-        
         $huboRegistros = $stmt->fetch();
         $stmt->close();
-
         if (!$huboRegistros) {
             $resultado = self::CODIGO_NO_ENCONTRADO;
         } else if ($verificado) {
@@ -134,9 +128,9 @@ class Usuario
 
         $this->codigoVerificacion = self::obtenerCodigoUnico("verificacion");
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion->prepare("INSERT INTO usuarios(nombre, correo, contrasenia, genero, fecha_nacimiento, codigo_verificacion) values (?, ?, ?, ?, ?, ?)");
+        $stmt = $conexion->prepare("INSERT INTO usuarios(correo,contrasenia,nombre,edad, codigo_verificacion) values (?, ?, ?, ?, ?)");
         $contrasenia = hash("sha512", $this->contrasenia);
-        $stmt->bind_param('ssssss', $this->nombre, $this->correo, $contrasenia, $this->genero, $this->fechaNacimiento, $this->codigoVerificacion); 
+        $stmt->bind_param('sssis', $this->correo,$contrasenia, $this->nombre,$this->edad,$this->codigoVerificacion); 
         
         if (!$stmt->execute()) {
             $resultado = self::ERROR;
@@ -156,7 +150,7 @@ class Usuario
         $conexion = Bd::obtenerConexion();
         $correo=$_POST['txtCorreo'];
         $contrasenia = $_POST['txtPassword'];
-        Aplicacion::establecerMensajeAviso($contrasenia);
+        Mensajes::establecerMensajeAviso($contrasenia);
         $stmt = $conexion->prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
         $stmt->bind_param('s', $correo);
         $stmt->execute();
@@ -185,20 +179,15 @@ class Usuario
      * @return Usuario int retorna un objeto de tipo usuario si se encontró, en caso contrario retorna USUARIO_NO_ENCONTRADO
      */
     public static function obtenerUsuario($correo){
-         $usuario = new Usuario("", "", "", "", "");
-
-        $sql = "SELECT id, correo, nombre, tipo, genero, fecha_nacimiento, foto, activo,
+        $usuario = new Usuario("", "", "", "");
+        $sql = "SELECT id, correo, nombre, tipo, edad,foto,
         verificado, codigo_verificacion, fecha_hora_registro, codigo_recuperacion, fecha_hora_recuperacion FROM USUARIOS WHERE CORREO='$correo'";
-
         $conexion = Bd::obtenerConexion();
-
         $stmt = $conexion->prepare($sql);
         $stmt->execute();
         $stmt->bind_result($usuario->id, $usuario->correo, $usuario->nombre, $usuario->tipo, 
-            $usuario->genero, $usuario->fechaNacimiento, $usuario->foto, $usuario->activo, 
-            $usuario->verificado, $usuario->codigoVerificacion, $usuario->fechaHoraRegistro, 
-            $usuario->codigoRecuperacion, $usuario->fechaHoraRecuperacion);
-        
+        $usuario->edad, $usuario->foto, $usuario->verificado, $usuario->codigoVerificacion, $usuario->fechaHoraRegistro, 
+        $usuario->codigoRecuperacion, $usuario->fechaHoraRecuperacion);
         $huboUsuario = $stmt->fetch();
         $stmt->close();
         if(!$huboUsuario){
@@ -225,7 +214,7 @@ class Usuario
         $stmt->execute();
         $huboListas = $stmt->fetch();
         if($huboListas === null) {
-            Aplicacion::establecerMensajeAviso("No se han creado listas");
+            Mensajes::establecerMensajeAviso("No se han creado listas");
             return null;
         }
         while ($row = $stmt ->fetch_assoc()) {

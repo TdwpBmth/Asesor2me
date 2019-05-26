@@ -3,7 +3,7 @@
 // Error - Error de algo.
 // Informacion.
 
-class Aplicacion {
+class Mensajes {
     public static function establecerMensajeExito($mensaje) {
         self::establecerMensaje($mensaje, "exito");
     }

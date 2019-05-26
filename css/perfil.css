@@ -1,0 +1,27 @@
+#fotoperfil{
+    margin: 10px;
+    width: 55%;
+    height: 55%;
+    border-radius: 55%;
+}
+#contenedor-foto-perfil{
+    text-align: center;
+}
+#edit-icon{
+    width: 25px;
+    height: 25px;
+    padding: 2px;
+    border-radius: 25px;
+    float: right;
+    
+}
+#edit-icon:hover{
+    cursor: pointer;
+}
+.contenedor-edit-icon{
+  float: left;
+    
+}
+.contenedor-dato{
+    margin-left: 5%;
+}

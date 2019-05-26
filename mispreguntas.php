@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Mis preguntas</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/perfil.css">
     <link rel="stylesheet" href="css/estilo.css">
@@ -31,7 +31,7 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="principal.php">Inicio<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown active">
+                <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Perfil
@@ -42,7 +42,7 @@
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Preguntas
@@ -57,49 +57,17 @@
             <button type="button" class="btn btn-outline-danger">Cerrar sesión</button>
         </div>
     </nav>
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <div id="contenedor-foto-perfil">
-                            <div ><img id="edit-icon" src="img/edit.png"></div>
-                            <img id="fotoperfil" src="img/defaultperfil.png">
-                            
-                        </div>
-                        <div>
-                                <div class="contenedor-edit-icon">  <h5>Nombre: </h4></div>                          
-                                    <div ><img id="edit-icon" src="img/edit.png"></div>
-                                    <div class="contenedor-dato"> <p>Fulano fulanito</p></div>
-                        </div>
-                        <hr class="my-1">
-                       
-                        
-                        <div>
-                            <div class="contenedor-edit-icon">  <h5>Edad: </h4></div>                          
-                                <div ><img id="edit-icon" src="img/edit.png"></div>
-                                <div class="contenedor-dato"> <p>25</p></div>
-                        </div>
-                        <hr class="my-1">
-                        <div>
-                                <div class="contenedor-edit-icon">  <h5>Correo: </h4></div>                          
-                                    
-                                    <div class="contenedor-dato"> <p>ejemplo@ejemplo.com</p></div>
-                        </div>
-                        <hr class="my-lg-1">
+    <section class="listas">
+        <div class="list-group">
+                <a href="visualizar.php?id=" class="list-group-item list-group-item-action flex-column align-items-start ">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Titulo</h5>
+                        <small>Hace 3 dias</small>
                     </div>
-                    <div style="text-align:center; margin-bottom: 2%">
-                            <button type="button" class="btn btn-success" disabled>Guardar</button>
-                            <button type="button" class="btn btn-danger" disabled>Cancelar</button>
-                    </div>
-                    
-                </div>
+                    <p class="mb-1">Descripcion de la pregunta</p>
+                </a>        
             </div>
-        </div>
-    </div>
-
+</section>
 </body>
 
 </html>

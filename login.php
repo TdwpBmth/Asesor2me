@@ -1,3 +1,9 @@
+<?php
+require_once "privado/Mensajes.php";
+$mensajeError = Mensajes::obtenerMensajeError();
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();		    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,9 +34,9 @@
                         </li>
                     </ul>
                   
-                    <form class="form-inline my-2 my-lg-0" style="margin-right:1%;">
+                    
                             <button type="button" class="btn btn-outline-light">Registrase</button>
-                        </form>
+                        
                 </div>
             </nav>
     <div class="container">
@@ -39,6 +45,18 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Iniciar sesión</h5>
+                        <?php
+                            if (isset($mensajeError)) {
+                                echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
+                            }
+                            if (isset($mensajeExito)) {
+                                echo "<div class='alert alert-success' role='alert'>$mensajeExito</div>";
+                            }
+                            if (isset($mensajeAviso)) {
+                                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+                            }
+
+                            ?>
                         <form class="form-signin">
                             <div class="form-label-group">
                                 <input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico"
@@ -51,17 +69,18 @@
                                     required>
                                 <label for="inputPassword">Contraseña</label>
                             </div>
-
-                            <div class="custom-control custom-checkbox mb-3">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">Remember password</label>
-                            </div>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Iniciar sesión</button>
+                            <div style="text-align:center;" class="my-4">
+                                    <p>O</p>
+                                </div>
                             <hr class="my-4">
                             <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-google mr-2"></i> Iniciar sesión con Google</button>
+                                    class="fab fa-google mr-2"></i> Continuar con Google</button>
                             <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-facebook-f mr-2"></i> Iniciar sesión con Facebook</button>
+                                    class="fab fa-facebook-f mr-2"></i> Continuar con Facebook</button>
+                                    <div style="text-align:center;" class="my-3">
+                                                <a  href="recuperarcontrasenia.php">¿Has olvidado la contraseña?</a>
+                                        </div>
                         </form>
                     </div>
                 </div>

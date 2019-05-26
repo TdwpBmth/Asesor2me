@@ -9,7 +9,8 @@
   }
   .container{
 
-    margin: 50px auto;
+    margin: 40px auto;
+    margin-bottom: 0;
   }
   .card-signin {
     border: 0;
@@ -115,6 +116,7 @@
   .listas{
     margin: 5%;
   }
+ 
   @media screen and (max-width:1190px){
     .listas{
         margin: 6%;
@@ -123,6 +125,6 @@
   @media screen and (max-width:1000px){
     .listas{
         margin: 7%;
-        margin-top: 60px;
+        margin-top: 5px;
       }
   }

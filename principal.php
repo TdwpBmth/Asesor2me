@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Asesor2me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilo.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -34,7 +35,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="perfil.php">Perfil</a>
-                        <a class="dropdown-item" href="#">Editar perfil</a>
+                        <a class="dropdown-item" href="#">Cambiar contraseña</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
@@ -44,8 +45,8 @@
                         Preguntas
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Realizar pregunta</a>
-                        <a class="dropdown-item" href="#">Mis pregutas</a>
+                        <a class="dropdown-item" href="crear.php">Crear pregunta</a>
+                        <a class="dropdown-item" href="mispreguntas.php">Mis pregutas</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
@@ -54,9 +55,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </form>
-            <form class="form-inline my-2 my-lg-0">
                 <button type="button" class="btn btn-outline-danger">Cerrar sesión</button>
-            </form>
         </div>
     </nav>
 <section class="listas">
@@ -110,6 +109,8 @@
                 <small class="text-muted">3 days ago</small>
             </div>
             <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
+                blandit.Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
+                blandit.Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
                 blandit.</p>
             <small class="text-muted">Donec id elit non mi porta.</small>
         </a>
