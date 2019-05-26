@@ -168,7 +168,7 @@ class Usuario
             }
             $_SESSION["nombre"] = $nombre;
             $_SESSION["id"] = $id;
-            $_SESSION["corrreo"] = $correo;
+            $_SESSION["correo"] = $correo;
         }
         return $resultado;
     }
