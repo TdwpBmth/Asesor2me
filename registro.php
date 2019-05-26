@@ -20,6 +20,7 @@ $mensajeExito = Mensajes::obtenerMensajeExito();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="js/index.js"></script>
     <title>Registro</title>
 </head>
 
@@ -34,7 +35,7 @@ $mensajeExito = Mensajes::obtenerMensajeExito();
             </ul>
 
             <form class="form-inline my-2 my-lg-0" style="margin-right:1%;">
-                <button type="button" class="btn btn-outline-light">Iniciar sesión</button>
+                <button id="btnIniciarSesion" type="button" class="btn btn-outline-light">Iniciar sesión</button>
             </form>
         </div>
     </nav>

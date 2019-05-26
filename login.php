@@ -21,6 +21,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="js/index.js"></script>
     <title>Iniciar sesión</title>
 </head>
 
@@ -33,10 +34,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                             <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
-                  
-                    
-                            <button type="button" class="btn btn-outline-light">Registrase</button>
-                        
+                            <button id="btnRegistrarse" type="button" class="btn btn-outline-light">Registrarse</button>                        
                 </div>
             </nav>
     <div class="container">
@@ -57,15 +55,15 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                             }
 
                             ?>
-                        <form class="form-signin">
+                        <form class="form-signin" action="procesarlogin.php" method="POST">
                             <div class="form-label-group">
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico"
+                                <input type="email" id="inputEmail" name="correo" class="form-control" placeholder="Correo electrónico"
                                     required autofocus>
                                 <label for="inputEmail">Correo electrónico</label>
                             </div>
 
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                                <input type="password" name="contrasenia"id="inputPassword" class="form-control" placeholder="Password"
                                     required>
                                 <label for="inputPassword">Contraseña</label>
                             </div>

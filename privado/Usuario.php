@@ -148,8 +148,8 @@ class Usuario
     public static function iniciarSesion($correo, $contrasenia){
         $resultado=self::EXITO;
         $conexion = Bd::obtenerConexion();
-        $correo=$_POST['txtCorreo'];
-        $contrasenia = $_POST['txtPassword'];
+        $correo=$_POST['correo'];
+        $contrasenia = $_POST['contrasenia'];
         Mensajes::establecerMensajeAviso($contrasenia);
         $stmt = $conexion->prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
         $stmt->bind_param('s', $correo);
@@ -170,7 +170,6 @@ class Usuario
             $_SESSION["id"] = $id;
             $_SESSION["corrreo"] = $correo;
         }
-    
         return $resultado;
     }
     /**

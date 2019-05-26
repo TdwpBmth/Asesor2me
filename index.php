@@ -15,6 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="js/index.js"></script>
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
@@ -37,8 +38,15 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
-                                        <button type="button" class="btn btn-outline-light" >Registrase</button> 
-                                        <button type="button" class="btn btn-outline-primary">Iniciar sesión</button>
+                                    <?php
+                                    session_start();
+                                    if (isset($_SESSION['nombre'])){ 
+                                        echo "<button id='btnCerrarSesion' type='button' class='btn btn-outline-danger'>Cerrar sesión</button>"; 
+                                        }else{
+                                            echo "<button id='btnRegistrarse' type='button' class='btn btn-outline-light'>Registrarse</button>
+                                            <button id='btnIniciarSesion' type='button' class='btn btn-outline-primary'>Iniciar sesión</button>";
+                                        }
+                                        ?>  
                                 </li>
                             </ul>
             </div>

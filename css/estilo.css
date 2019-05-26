@@ -120,11 +120,12 @@
   @media screen and (max-width:1190px){
     .listas{
         margin: 6%;
+        margin-top: 60px;
       }
   }
   @media screen and (max-width:1000px){
     .listas{
         margin: 7%;
-        margin-top: 5px;
+        margin-top: 60px;
       }
   }
