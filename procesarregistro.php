@@ -9,7 +9,6 @@ if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrase
 
         if ($respuesta == Usuario::ERROR_CORREO_DUPLICADO) {
             $usuario = Usuario::obtenerUsuario($_POST['correo']);
-            echo $usuario;
             if($usuario->verificado){
                 Mensajes::establecerMensajeAviso("El usuario con correo ".$_POST['correo']." ya se encuentra registrado.");
                 header("Location: login.php");
