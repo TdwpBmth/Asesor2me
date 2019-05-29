@@ -129,7 +129,7 @@ class Usuario
         $this->codigoVerificacion = self::obtenerCodigoUnico("verificacion");
         $conexion = Bd::obtenerConexion();
         $stmt = $conexion->prepare("INSERT INTO usuarios(correo,contrasenia,nombre,edad, codigo_verificacion) values (?, ?, ?, ?, ?)");
-        $contrasenia = hash("sha512", $this->contrasenia);
+        $contrasenia = password_hash($this->contrasenia,PASSWORD_DEFAULT);
         $stmt->bind_param('sssis', $this->correo,$contrasenia, $this->nombre,$this->edad,$this->codigoVerificacion); 
         
         if (!$stmt->execute()) {
@@ -148,18 +148,16 @@ class Usuario
     public static function iniciarSesion($correo, $contrasenia){
         $resultado=self::EXITO;
         $conexion = Bd::obtenerConexion();
-        $correo=$_POST['correo'];
-        $contrasenia = $_POST['contrasenia'];
-        Mensajes::establecerMensajeAviso($contrasenia);
         $stmt = $conexion->prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
         $stmt->bind_param('s', $correo);
         $stmt->execute();
         $stmt->bind_result($verificado, $nombre, $id, $contraseniaBD);
         $huboRegistros = $stmt->fetch();
+        echo $huboRegistros;
         $stmt->close();
-        if (!$huboRegistros && password_verify($contrasenia, $contraseniaBD )) {
+        if (!$huboRegistros || !password_verify($contrasenia, $contraseniaBD)) {
             $resultado=self::DATOS_INCORRECTOS;
-        } else if(!$verificado){
+        } else if($verificado==0){
             $resultado=self::USUARIO_NO_VERIFICADO;
         } else{
             $resultado=self::EXITO;
@@ -170,8 +168,15 @@ class Usuario
             $_SESSION["id"] = $id;
             $_SESSION["correo"] = $correo;
         }
+        
         return $resultado;
     }
+
+
+
+
+
+
     /**
      * Obtiene todos los datos del usuario a partir de su correo
      * @param string correo Correo a partir del cual se obtendrá el usuario

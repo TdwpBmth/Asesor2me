@@ -1,7 +1,7 @@
 <?php
 require_once 'privado/cargartodo.php';
-session_start();
-if (isset($_SESSION['nombre'])){ 
+
+if (session_start() && isset($_SESSION['nombre'])){ 
     $usuario = Usuario::obtenerUsuario($_SESSION['correo']);
     
     }else{
@@ -51,6 +51,22 @@ if (isset($_SESSION['nombre'])){
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="perfil.php">Perfil</a>
                         <a class="dropdown-item" href="cambiarcontrasenia.php">Cambiar contraseña</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categorías
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" disable>Temas</a>
+                        <a class="dropdown-item" href="#">Artes</a>
+                        <a class="dropdown-item" href="#">Matemáticas</a>
+                        <a class="dropdown-item" href="#">Programación</a>
+                        <a class="dropdown-item" href="#">Ciencias</a>
+                        <a class="dropdown-item" href="#">Cotidiano</a>
+                        <a class="dropdown-item" href="#">Libre</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>

@@ -25,11 +25,12 @@ if (isset($_SESSION['nombre'])){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="js/index.js"></script>
 </head>
 
 <body>
-    <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="principal.php"><img src="img/mini-logo.png"></a>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,21 +38,37 @@ if (isset($_SESSION['nombre'])){
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="principal.php">Inicio<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown ">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Perfil
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        <a class="dropdown-item" href="#">Cambiar contraseña</a>
+                        <a class="dropdown-item" href="perfil.php">Perfil</a>
+                        <a class="dropdown-item" href="cambiarcontrasenia.php">Cambiar contraseña</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
-                <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categorías
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item disable" href="#" disable>Temas</a>
+                        <a class="dropdown-item" href="#">Artes</a>
+                        <a class="dropdown-item" href="#">Matemáticas</a>
+                        <a class="dropdown-item" href="#">Programación</a>
+                        <a class="dropdown-item" href="#">Ciencias</a>
+                        <a class="dropdown-item" href="#">Cotidiano</a>
+                        <a class="dropdown-item" href="#">Libre</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+                <li class="nav-item dropdown active" >
+                    <a class="nav-link dropdown-toggle" href="mispreguntas.php" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Preguntas
                     </a>
@@ -62,7 +79,7 @@ if (isset($_SESSION['nombre'])){
                     </div>
                 </li>
             </ul>
-            <button type="button" class="btn btn-outline-danger">Cerrar sesión</button>
+            <button id="btnCerrarSesion" type="button" class="btn btn-outline-danger">Cerrar sesión</button>
         </div>
     </nav>
 

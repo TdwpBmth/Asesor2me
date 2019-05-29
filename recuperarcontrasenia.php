@@ -28,7 +28,7 @@ if (isset($_SESSION['nombre'])){
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="js/index.js"></script>
-    <title>Iniciar sesión</title>
+    <title>Recuperación de contraseña</title>
 </head>
 
 <body>
@@ -48,7 +48,7 @@ if (isset($_SESSION['nombre'])){
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Iniciar sesión</h5>
+                        <h5 class="card-title text-center">Recuperación de contraseña</h5>
                         <?php
                             if (isset($mensajeError)) {
                                 echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
@@ -61,30 +61,16 @@ if (isset($_SESSION['nombre'])){
                             }
 
                             ?>
-                        <form class="form-signin" action="procesarlogin.php" method="POST">
+                        <form class="form-signin" action="procesarrecuperar.php" method="POST">
                             <div class="form-label-group">
                                 <input type="email" id="inputEmail" name="correo" class="form-control" placeholder="Correo electrónico"
                                     required autofocus>
                                 <label for="inputEmail">Correo electrónico</label>
                             </div>
-
-                            <div class="form-label-group">
-                                <input type="password" name="contrasenia"id="inputPassword" class="form-control" placeholder="Password"
-                                    required>
-                                <label for="inputPassword">Contraseña</label>
-                            </div>
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Iniciar sesión</button>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Recuperar</button>
                             <div style="text-align:center;" class="my-4">
-                                    <p>O</p>
                                 </div>
-                            <hr class="my-4">
-                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-google mr-2"></i> Continuar con Google</button>
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-facebook-f mr-2"></i> Continuar con Facebook</button>
-                                    <div style="text-align:center;" class="my-3">
-                                                <a  href="recuperarcontrasenia.php">¿Has olvidado la contraseña?</a>
-                                        </div>
+                            <hr class="my-1">
                         </form>
                     </div>
                 </div>

@@ -1,7 +1,14 @@
 <?php
 require_once "privado/Mensajes.php";
 $mensajeError = Mensajes::obtenerMensajeError();
-$mensajeExito = Mensajes::obtenerMensajeExito();		    
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();
+if (isset($_SESSION['nombre'])){ 
+    header("Location: index.php");
+    
+    }else{
+        
+    }		    
 ?>
 <!DOCTYPE html>
 <html lang="en">
