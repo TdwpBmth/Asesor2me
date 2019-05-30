@@ -29,7 +29,7 @@ if (isset($_SESSION['nombre'])){
 </head>
 
 <body>
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,11 +63,11 @@ if (isset($_SESSION['nombre'])){
                         <a class="dropdown-item" href="#">Programación</a>
                         <a class="dropdown-item" href="#">Ciencias</a>
                         <a class="dropdown-item" href="#">Cotidiano</a>
-                        <a class="dropdown-item" href="#">Libre</a>
+                        <a class="dropdown-item" href="#">Otro</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
-                <li class="nav-item dropdown active" >
+                <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="mispreguntas.php" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Preguntas
@@ -83,20 +83,36 @@ if (isset($_SESSION['nombre'])){
         </div>
     </nav>
 
-<section class="listas">
-<form>
-  <div class="form-group">
-    <label for="inputTitulo">Titulo</label>
-    <input type="text" class="form-control" id="inputTitulo" placeholder="Titulo">
-  </div>
-  <div class="form-group">
-  <label for="comment">Descripción:</label>
-  <textarea class="form-control" rows="10" id="comment" placeholder="Descripción"></textarea>
-</div>
-<button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Guardar</button>
-</form>
-</section>
-    
+    <section class="listas">
+        <div class="contenedor-crear">
+            <form class="contenedor-crear">
+                <div class="form-group">
+                    <label for="inputTitulo">Titulo</label>
+                    <input type="text" class="form-control" id="inputTitulo" placeholder="Titulo">
+                </div>
+                <div class="form-group">
+                    <label for="comment">Descripción:</label>
+                    <textarea class="form-control" rows="10" id="comment" placeholder="Descripción"></textarea>
+                </div>
+                <div>
+                    <div class=" my-1">
+                        <label class="mr-sm-2" for="categoria">Categoría</label>
+                        <select class="custom-select mr-sm-2" id="categoria">
+                            <option value="artes" selected>Artes</option>
+                            <option value="matematicas">Matemáticas</option>
+                            <option value="ciencias">Ciencias</option>
+                            <option value="programacion">Programación</option>
+                            <option value="cotidiano">Cotidiano</option>
+                            <option value="otro">Otro</option>
+
+                        </select>
+                    </div>
+                    <button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Guardar</button>
+            </form>
+
+        </div>
+
+    </section>
 </body>
 
 </html>

@@ -7,6 +7,9 @@
     background: #343a40;
     background: linear-gradient(to right, #6c6d6e, #9c9ea0);
   }
+  .contenedor-crear{
+    margin: 100px;
+  }
   .container{
 
     margin: 40px auto;
@@ -121,6 +124,10 @@
     .listas{
         margin: 6%;
         margin-top: 60px;
+      }
+
+      .contenedor-crear{
+        margin: 0;
       }
   }
   @media screen and (max-width:1000px){

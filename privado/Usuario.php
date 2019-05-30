@@ -208,23 +208,18 @@ class Usuario
          $stmt->close();
     }
 
-    // Kevin
-    public function obtenerListas() {
-        //$listas = Colección de objetos de tipo lista
-        $listas = array();
+    public function obtenerPreguntas() {
+        $preguntas = array();
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion->prepare("SELECT id,titulo FROM listas WHERE id_usuario = ?");
-        $stmt->bind_param('i', $_SESSION['id']);
-        $stmt->execute();
-        $huboListas = $stmt->fetch();
-        if($huboListas === null) {
-            Mensajes::establecerMensajeAviso("No se han creado listas");
-            return null;
+        $query = "SELECT id FROM pregunta";
+        $result = $conexion -> query($query);
+        if($result === false) {
+            return false;
         }
-        while ($row = $stmt ->fetch_assoc()) {
-            $listas[] = Lista::obtenerListas($row['id'],$row['titulo']);
+        while ($row = $result -> fetch_assoc()) {
+            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
         }
-        $stmt->close();
-        return $listas;
+        return $preguntas;
     }
 }
+

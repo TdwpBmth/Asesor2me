@@ -100,7 +100,7 @@ if (session_start() && isset($_SESSION['nombre'])){
                         <div>
                                 <div class="contenedor-edit-icon">  <h5>Nombre: </h4></div>                          
                                     <div ><img id="edit-icon" src="img/edit.png"></div>
-                                    <?php echo "<div class='contenedor-dato'> <p> $usuario->nombre</p></div>" ?>
+                                    <?php echo "<div class='contenedor-dato'> <p text-uppercase> $usuario->nombre</p></div>" ?>
                         </div>
                         <hr class="my-1">
                        
@@ -108,7 +108,7 @@ if (session_start() && isset($_SESSION['nombre'])){
                         <div>
                             <div class="contenedor-edit-icon">  <h5>Edad: </h4></div>                          
                                 <div ><img id="edit-icon" src="img/edit.png"></div>
-                                <?php echo "<div class='contenedor-dato'> <p> $usuario->edad</p></div>" ?>
+                                <?php echo "<div class='contenedor-dato'> <p text-uppercase> $usuario->edad</p></div>" ?>
                         </div>
                         <hr class="my-1">
                         <div>

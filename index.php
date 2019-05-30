@@ -1,3 +1,9 @@
+<?php
+require_once "privado/cargartodo.php";
+$mensajeError = Mensajes::obtenerMensajeError();
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();	    
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -32,7 +38,6 @@
                     <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                 </li>
                 <?php
-                    session_start();
                     if (isset($_SESSION['nombre'])){ 
                         echo "  <li class='nav-item dropdown '>
                         <a class='nav-link dropdown-toggle' href='perfil.php' id='navbarDropdown' role='button'
@@ -102,14 +107,25 @@
             </div>
     </nav>
     <section class="listas">
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Titulo</h5>
-                    <small>Hace 3 dias</small>
-                </div>
-                <p class="mb-1">Descripcion de la pregunta</p>
-            </a>
+        <div class='list-group'>
+            <?php
+            if($preguntas = Usuario::obtenerPreguntas()==null){
+                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+            }else{
+                $preguntas = Usuario::obtenerPreguntas();
+                foreach ($preguntas as $pregunta){
+                        echo "
+                            <a href='#' class='list-group-item list-group-item-action flex-column align-items-start '>
+                                <div class='d-flex w-100 justify-content-between'>
+                                    <h5 class='mb-1'>$pregunta->titulo</h5>
+                                    <small>Hace 3 dias</small>
+                                </div>
+                                <p class='mb-1'>$pregunta->contenido</p>
+                            </a>
+                        ";
+                }
+            }
+        ?>
         </div>
     </section>
 </body>
