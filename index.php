@@ -109,13 +109,13 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
     <section class="listas">
         <div class='list-group'>
             <?php
-            if($preguntas = Usuario::obtenerPreguntas()==null){
+            $preguntas = Preguntas::obtenerAllPreguntas();
+            if($preguntas==null){
                 echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
             }else{
-                $preguntas = Usuario::obtenerPreguntas();
                 foreach ($preguntas as $pregunta){
                         echo "
-                            <a href='#' class='list-group-item list-group-item-action flex-column align-items-start '>
+                            <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start '>
                                 <div class='d-flex w-100 justify-content-between'>
                                     <h5 class='mb-1'>$pregunta->titulo</h5>
                                     <small>Hace 3 dias</small>

@@ -13,9 +13,8 @@ class Preguntas {
     const EXITO = 1;
 
     
-    public function __construct($id,$id_usuario,$titulo,$contenido,$categoria)
+    public function __construct($id_usuario,$titulo,$contenido,$categoria)
     {
-        $this->id = $id;
         $this->id_usuario = $id_usuario;
         $this->titulo = $titulo;
         $this->contenido = $contenido;
@@ -56,8 +55,8 @@ class Preguntas {
     public function crearPregunta() {
         $resultado = self::EXITO;
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion->prepare("INSERT INTO pregunta(id,id_usuario,titulo,contenido,categoria) values (?, ?, ?, ?, ?)");
-        $stmt->bind_param('iisss', $this->id,$this->id_usuario,$this->titulo,$this->contenido, $this->categoria); 
+        $stmt = $conexion->prepare("INSERT INTO pregunta(id_usuario,titulo,contenido,categoria) values (?, ?, ?, ?)");
+        $stmt->bind_param('isss', $this->id_usuario,$this->titulo,$this->contenido, $this->categoria); 
         if (!$stmt->execute()) {
             $resultado = self::ERROR;
             if ($conexion->errno == 1062) {
@@ -67,5 +66,31 @@ class Preguntas {
         $stmt->close();
         return $resultado;
     }
+    public function obtenerAllPreguntas() {
+        $preguntas = array();
+        $conexion = Bd::obtenerConexion();
+        $query = "SELECT id FROM pregunta";
+        $result = $conexion -> query($query);
+        if($result === false) {
+            return false;
+        }
+        while ($row = $result -> fetch_assoc()) {
+            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+        }
+        return $preguntas;
+    }
 
+    public function obtenerPreguntasUsuario($id_usuario) {
+        $preguntas = array();
+        $conexion = Bd::obtenerConexion();
+        $query = "SELECT id FROM pregunta where id_usuario = $id_usuario";
+        $result = $conexion -> query($query);
+        if($result === false) {
+            return false;
+        }
+        while ($row = $result -> fetch_assoc()) {
+            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+        }
+        return $preguntas;
+    }
 }

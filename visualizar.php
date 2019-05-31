@@ -1,3 +1,7 @@
+<?php
+    require_once "privado/cargartodo.php";
+    $pregunta = Preguntas::obtenerPregunta($_GET['id']);
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,7 +26,7 @@
 
 <body>
     <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="principal.php"><img src="img/mini-logo.png"></a>
+        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item ">
-                    <a class="nav-link" href="principal.php">Inicio<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown ">
                     <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
@@ -70,17 +74,17 @@
     </nav>
 
     <section class="listas">
-       
         <div class="contenedor-contenido">
-                <div class="form-group">
-                        <label for="inputTitulo">Titulo</label>
-                        
+                <?php
+                    echo "
+                    <div class='form-group'>
+                        <label for='inputTitulo'>$pregunta->titulo</label>
                     </div>
-                    <div class="form-group">
-                        <p for="comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit fugiat eligendi molestias odit soluta, maiores dolore<a> hola </a>mque recusandae vitae! Temporibus quo voluptatibus recusandae eos esse debitis iusto consequuntur tempora quasi laborum?</p>
+                    <div class='form-group'>
+                        <p for='comment'>$pregunta->contenido</p>
                     </div>
-        
-
+                    "
+                ?>
         </div>
             
             <form>

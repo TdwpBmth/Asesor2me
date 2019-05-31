@@ -1,5 +1,9 @@
 <?php
-session_start();
+include_once"privado/cargartodo.php";
+$mensajeError = Mensajes::obtenerMensajeError();
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();
+
 if (isset($_SESSION['nombre'])){ 
     
     }else{
@@ -84,13 +88,34 @@ if (isset($_SESSION['nombre'])){
     </nav>
     <section class="listas">
         <div class="list-group">
-                <a href="visualizar.php?id=" class="list-group-item list-group-item-action flex-column align-items-start ">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Titulo</h5>
-                        <small>Hace 3 dias</small>
-                    </div>
-                    <p class="mb-1">Descripcion de la pregunta</p>
-                </a>        
+        <?php
+            if (isset($mensajeError)) {
+                echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
+            }
+            if (isset($mensajeExito)) {
+                echo "<div class='alert alert-success' role='alert'>$mensajeExito</div>";
+            }
+            if (isset($mensajeAviso)) {
+                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+            }
+
+            $preguntas = Preguntas::obtenerPreguntasUsuario($_SESSION['id']);
+            if($preguntas==false){
+                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+            }else{
+                foreach ($preguntas as $pregunta){
+                        echo "
+                            <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start '>
+                                <div class='d-flex w-100 justify-content-between'>
+                                    <h5 class='mb-1'>$pregunta->titulo</h5>
+                                    <small>Hace 3 dias</small>
+                                </div>
+                                <p class='mb-1'>$pregunta->contenido</p>
+                            </a>
+                        ";
+                }
+            }
+        ?>       
             </div>
 </section>
 </body>

@@ -1,4 +1,8 @@
 <?php
+require_once "privado/Mensajes.php";
+$mensajeError = Mensajes::obtenerMensajeError();
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();
 session_start();
 if (isset($_SESSION['nombre'])){ 
     
@@ -85,29 +89,40 @@ if (isset($_SESSION['nombre'])){
 
     <section class="listas">
         <div class="contenedor-crear">
-            <form class="contenedor-crear">
+                <?php
+                if (isset($mensajeError)) {
+                    echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
+                }
+                if (isset($mensajeExito)) {
+                    echo "<div class='alert alert-success' role='alert'>$mensajeExito</div>";
+                }
+                if (isset($mensajeAviso)) {
+                    echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+                }
+
+                ?>
+            <form class="contenedor-crear" method="POST" action="guardarpregunta.php">
                 <div class="form-group">
                     <label for="inputTitulo">Titulo</label>
-                    <input type="text" class="form-control" id="inputTitulo" placeholder="Titulo">
+                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Titulo">
                 </div>
                 <div class="form-group">
                     <label for="comment">Descripción:</label>
-                    <textarea class="form-control" rows="10" id="comment" placeholder="Descripción"></textarea>
+                    <textarea class="form-control" rows="10" id="contenido" name="contenido" placeholder="Descripción"></textarea>
                 </div>
                 <div>
                     <div class=" my-1">
                         <label class="mr-sm-2" for="categoria">Categoría</label>
-                        <select class="custom-select mr-sm-2" id="categoria">
+                        <select class="custom-select mr-sm-2" name="categoria" id="categoria">
                             <option value="artes" selected>Artes</option>
                             <option value="matematicas">Matemáticas</option>
                             <option value="ciencias">Ciencias</option>
                             <option value="programacion">Programación</option>
                             <option value="cotidiano">Cotidiano</option>
                             <option value="otro">Otro</option>
-
                         </select>
                     </div>
-                    <button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Guardar</button>
+                    <button class="btn btn-success btn-lg btn-block text-uppercase" type="submit">Publicar</button>
             </form>
 
         </div>

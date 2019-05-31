@@ -206,20 +206,6 @@ class Usuario
          $stmt->bind_param('s', $correo);
          $stmt->execute();
          $stmt->close();
-    }
-
-    public function obtenerPreguntas() {
-        $preguntas = array();
-        $conexion = Bd::obtenerConexion();
-        $query = "SELECT id FROM pregunta";
-        $result = $conexion -> query($query);
-        if($result === false) {
-            return false;
-        }
-        while ($row = $result -> fetch_assoc()) {
-            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
-        }
-        return $preguntas;
-    }
+    }    
 }
 
