@@ -1,6 +1,5 @@
 <?php
     require_once "privado/cargartodo.php";
-    $pregunta = Preguntas::obtenerPregunta($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -76,6 +75,7 @@
     <section class="listas">
         
                 <?php
+                $pregunta = Preguntas::obtenerPregunta($_GET['id']);
                     echo "
                     <div class='form-group'>
                     <label>Titulo:</label>
@@ -91,7 +91,7 @@
                 ?>
      
             
-            <form>
+      
             <div class="detailBox">
                 <div class="titleBox">
                     <label>Comentarios</label>
@@ -99,15 +99,8 @@
                 </div>
 
                 <div class="actionBox">
-                    <ul class="commentList">
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/50/50" />
-                            </div>
-                            <div class="commentText">
-                                <p class="">Este es un comentario.</p> <span class="date sub-text">25/05/19</span>
-                            </div>
-                        </li>
+                    <ul id="listaComentarios" class="commentList">
+                        
                         <li>
                             <div class="commenterImage">
                                 <img src="http://placekitten.com/45/45" />
@@ -131,23 +124,89 @@
                     </ul>
                     
                 </div>
-                <div class="contenedor">
-                    <form  >
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Tu comentario" />
+               <?php
+                echo"
+                <div class='contenedor'>
+                   
+                        <div class='form-group'>
+                            <input required id='txtBoxComentario' name='comentario' class='form-control' type='text' placeholder='Tu comentario' />
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success">Comentar</button>
+                        <div class='form-group'>
+                            <button id='btnComentar' type='button' class='btn btn-success'>Comentar</button>
                         </div>
-                    </form>
+                    
                 </div>
+                <input id='idPreguntaActual' type='text' hidden value='$pregunta->id'>
+                ";
+
+               ?>
                 
             </div>
 
-        </form>
+       
 
     </section>
 
 </body>
+<script>
+    var httpRequest;
+
+    function solicitarComentarios() {
+        var preguntaid = document.querySelector("#idPreguntaActual").value;
+        console.log(preguntaid);
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = cargarPreguntas;
+        httpRequest.open("POST", 'obtenercomentarios.php');
+        httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        httpRequest.send('pregunta=' + preguntaid);
+        httpRequest.timeout = 2000;
+        httpRequest.ontimeout = function (e) {
+            //document.querySelector("#horoscopo").innerHTML = "El servidor está ocupado, inténtalo más tarde.";
+        };
+
+
+        //document.querySelector("#horoscopo").innerHTML = "Cargando...";
+    }
+
+    function cargarPreguntas() {
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                
+                if(httpRequest.responseText!="1exito"){
+                    document.getElementById("listaComentarios").innerHTML=httpRequest.responseText;
+                }else{
+                    document.getElementById('txtBoxComentario').value="";
+                    solicitarComentarios();
+
+                }
+                
+            } else {                 
+                //document.querySelector("#horoscopo").innerHTML = "Hubo un error";
+            }
+        }
+    }
+
+    function inicializar(){
+        solicitarComentarios();
+        var btnComentar = document.getElementById('btnComentar');
+        var preguntaid = document.querySelector("#idPreguntaActual").value;
+
+        btnComentar.addEventListener('click', function () {
+        var contenido=document.getElementById('txtBoxComentario').value;
+        if(contenido!=null){
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = cargarPreguntas;
+        httpRequest.open("POST", 'procesarcomentario.php?id_pregunta='+preguntaid);
+        httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        httpRequest.send('comentario=' + contenido);
+        httpRequest.timeout = 2000;
+        httpRequest.ontimeout = function (e) {
+            //document.querySelector("#horoscopo").innerHTML = "El servidor está ocupado, inténtalo más tarde.";
+        }
+    }});
+    }
+
+    window.onload = inicializar;
+</script>
 
 </html>

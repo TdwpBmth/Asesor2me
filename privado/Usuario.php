@@ -1,7 +1,6 @@
 <?php
-require_once "Bd.php";
-require_once "Genericas.php";
-require_once "Mensajes.php";
+require_once "cargartodo.php";
+
 
 /**
  * Gestiona lo relacionado con los usuarios.
