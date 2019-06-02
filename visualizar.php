@@ -1,6 +1,5 @@
 <?php
     require_once "privado/cargartodo.php";
-    $pregunta = Preguntas::obtenerPregunta($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -76,7 +75,11 @@
     <section class="listas">
         
                 <?php
+<<<<<<< HEAD
                 
+=======
+                $pregunta = Preguntas::obtenerPregunta($_GET['id']);
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
                     echo "
                     <div class='form-group'>
                     <label>Titulo:</label>
@@ -154,6 +157,10 @@
 
     function solicitarComentarios() {
         var preguntaid = document.querySelector("#idPreguntaActual").value;
+<<<<<<< HEAD
+=======
+        console.log(preguntaid);
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
         httpRequest = new XMLHttpRequest();
         httpRequest.onreadystatechange = cargarPreguntas;
         httpRequest.open("POST", 'obtenercomentarios.php');
@@ -172,6 +179,7 @@
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             if (httpRequest.status === 200) {
                 
+<<<<<<< HEAD
                 if(httpRequest.responseText!="exito"){
                     document.getElementById("listaComentarios").innerHTML=httpRequest.responseText;
                     inciarListener();
@@ -180,11 +188,20 @@
                     
                     solicitarComentarios();
                     
+=======
+                if(httpRequest.responseText!="1exito"){
+                    document.getElementById("listaComentarios").innerHTML=httpRequest.responseText;
+                }else{
+                    document.getElementById('txtBoxComentario').value="";
+                    solicitarComentarios();
+
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
                 }
                 
             } else {                 
                 //document.querySelector("#horoscopo").innerHTML = "Hubo un error";
             }
+<<<<<<< HEAD
             
         }
     }
@@ -203,15 +220,26 @@
 
     function irUsuario(){
         
+=======
+        }
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
     }
 
     function inicializar(){
         solicitarComentarios();
         var btnComentar = document.getElementById('btnComentar');
+<<<<<<< HEAD
         btnComentar.addEventListener('click', function(){
         var contenido=document.getElementById('txtBoxComentario').value;
         var preguntaid = document.querySelector("#idPreguntaActual").value;
         if(contenido!=""){
+=======
+        var preguntaid = document.querySelector("#idPreguntaActual").value;
+
+        btnComentar.addEventListener('click', function () {
+        var contenido=document.getElementById('txtBoxComentario').value;
+        if(contenido!=null){
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
         httpRequest = new XMLHttpRequest();
         httpRequest.onreadystatechange = cargarPreguntas;
         httpRequest.open("POST", 'procesarcomentario.php?id_pregunta='+preguntaid);
@@ -220,10 +248,17 @@
         httpRequest.timeout = 2000;
         httpRequest.ontimeout = function (e) {
             //document.querySelector("#horoscopo").innerHTML = "El servidor está ocupado, inténtalo más tarde.";
+<<<<<<< HEAD
             }
         }
         });        
     }
+=======
+        }
+    }});
+    }
+
+>>>>>>> 468c5f996c73990ceb00c7924c93fa7cc15500a2
     window.onload = inicializar;
 </script>
 
