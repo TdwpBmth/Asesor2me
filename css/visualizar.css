@@ -47,10 +47,11 @@
 .commenterImage {
     width:30px;
     margin-right:5px;
-    height:100%;
+    height:30px;
     float:left;
 }
 .commenterImage img {
+    height: 100%;
     width:100%;
     border-radius:50%;
 }
@@ -68,8 +69,13 @@
 }
 .contenedor{
     margin: 10px ;
+    border-style: solid;
+border: black;
 }
 .contenedor-contenido{
 background-color: white;
 
+}
+#imgUsuario:hover{
+    cursor: pointer;
 }

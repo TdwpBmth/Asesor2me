@@ -1,7 +1,6 @@
 <?php
-require_once "Bd.php";
-require_once "Genericas.php";
-require_once "Mensajes.php";
+require_once "cargartodo.php";
+
 
 /**
  * Gestiona lo relacionado con los usuarios.
@@ -186,8 +185,7 @@ class Usuario
      * @param string correo Correo a partir del cual se obtendrá el usuario
      * @return Usuario int retorna un objeto de tipo usuario si se encontró, en caso contrario retorna USUARIO_NO_ENCONTRADO
      */
-    public static
-    function obtenerUsuario($correo,$id_usuario) {
+    public static function obtenerUsuario($correo,$id_usuario) {
         if($correo!=null){
         $usuario = new Usuario("", "", "", "");
         $sql = "SELECT id, correo, nombre, tipo, edad,foto,

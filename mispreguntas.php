@@ -96,7 +96,7 @@ if (isset($_SESSION['nombre'])){
                         echo "<div class='alert alert-info' role='alert'>No existen preguntas</div>";
                     
                 }else{
-                    foreach ($preguntas as $pregunta){
+                    foreach (array_reverse($preguntas) as $pregunta){
                             $usuario = Usuario::obtenerUsuario(null,$_SESSION['id']);
                             echo "
                                 <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start ' style='overflow:hidden;'>
