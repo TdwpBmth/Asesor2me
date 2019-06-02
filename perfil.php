@@ -1,8 +1,10 @@
 <?php
 require_once 'privado/cargartodo.php';
-
-if (session_start() && isset($_SESSION['nombre'])){ 
-    $usuario = Usuario::obtenerUsuario($_SESSION['correo']);
+$mensajeError = Mensajes::obtenerMensajeError();
+$mensajeExito = Mensajes::obtenerMensajeExito();
+$mensajeAviso = Mensajes::obtenerMensajeAviso();
+if (isset($_SESSION['nombre'])){ 
+    $usuario = Usuario::obtenerUsuario($_SESSION['correo'],$_SESSION['id']);
     
     }else{
         header("Location: index.php");
@@ -28,6 +30,8 @@ if (session_start() && isset($_SESSION['nombre'])){
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="js/index.js">
+    </script>
+    <script src="js/perfil.js">
     </script>
 </head>
 
@@ -93,33 +97,61 @@ if (session_start() && isset($_SESSION['nombre'])){
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <div id="contenedor-foto-perfil">
-                            <div ><img id="edit-icon" src="img/edit.png"></div>
-                            <img id="fotoperfil" src="img/defaultperfil.png">
+                            <div ><img id="edit-icon-foto" class="edit-icon" src="img/edit.png"></div>
+                            <?php echo "<img id='fotoperfil' src=$usuario->foto>";
+                            ?>
+                            <form id="frmFoto" class="ocultar"action="actualizardatos.php" enctype="multipart/form-data" method="POST">
+                            <div class="form-group " id="inputFoto">
+                                <label for="fotoPerfilSubir">Elegir imagen</label>
+                                <input type="file" name="imagen" class="form-control-file" id="fotoPerfilSubir">
+                            </div>
+                            </form>
                             
                         </div>
                         <div>
-                                <div class="contenedor-edit-icon">  <h5>Nombre: </h4></div>                          
-                                    <div ><img id="edit-icon" src="img/edit.png"></div>
-                                    <?php echo "<div class='contenedor-dato'> <p text-uppercase> $usuario->nombre</p></div>" ?>
+                                <div>  <h5>Nombre: </h4></div>                          
+                                <div ><img id="edit-icon-nombre" class="edit-icon" src="img/edit.png"></div>
+                                <form id="frmNombre" class="ocultar" action="actualizardatos.php" method="POST">
+                                        <div class="form-group"  >
+                                          <input autofocus name="nombre" type="text" class="form-control" id="inputNombre" required>
+                                        </div>
+                                    </form>
+                                    <?php echo "<div id='txtNombre' class='contenedor-dato'> <p id='valorNombre' text-uppercase> $usuario->nombre</p></div>" ?>
                         </div>
                         <hr class="my-1">
                        
                         
                         <div>
-                            <div class="contenedor-edit-icon">  <h5>Edad: </h4></div>                          
-                                <div ><img id="edit-icon" src="img/edit.png"></div>
-                                <?php echo "<div class='contenedor-dato'> <p text-uppercase> $usuario->edad</p></div>" ?>
+                            <div>  <h5>Edad: </h4></div>                          
+                            <div ><img id="edit-icon-edad" class="edit-icon" src="img/edit.png"></div>
+                            <form id="frmEdad" class="ocultar" action="actualizardatos.php" method="POST">
+                                    <div class="form-group"  >
+                                      <input autofocus name="edad" type="text" class="form-control" id="inputEdad" required>
+                                    </div>
+                                </form>
+                                <?php echo "<div id='txtEdad' class='contenedor-dato'> <p id='valorEdad' text-uppercase> $usuario->edad</p></div>" ?>
                         </div>
                         <hr class="my-1">
                         <div>
-                                <div class="contenedor-edit-icon">  <h5>Correo: </h4></div>                          
+                                <div>  <h5>Correo: </h4></div>                          
                                 <?php echo "<div class='contenedor-dato'> <p> $usuario->correo</p></div>" ?>
                         </div>
                         <hr class="my-lg-1">
                     </div>
+                    <?php
+            if (isset($mensajeError)) {
+                echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
+            }
+            if (isset($mensajeExito)) {
+                echo "<div class='alert alert-success' role='alert'>$mensajeExito</div>";
+            }
+            if (isset($mensajeAviso)) {
+                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+            }
+                    ?>
                     <div style="text-align:center; margin-bottom: 2%">
-                            <button type="button" class="btn btn-success" disabled>Guardar</button>
-                            <button type="button" class="btn btn-danger" disabled>Cancelar</button>
+                            <button id="btnGuardar" type="submit" class="btn btn-success" disabled>Guardar</button>
+                            <button id="btnCancelar" type="button" class="btn btn-danger" disabled>Cancelar</button>
                     </div>
                     
                 </div>
@@ -128,5 +160,6 @@ if (session_start() && isset($_SESSION['nombre'])){
     </div>
 
 </body>
+
 
 </html>

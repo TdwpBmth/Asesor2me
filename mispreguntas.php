@@ -55,21 +55,22 @@ if (isset($_SESSION['nombre'])){
                         <div class="dropdown-divider"></div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="perfil.php" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class='nav-item dropdown '>
+                    <a class='nav-link dropdown-toggle' href='perfil.php' id='navbarDropdown' role='button'
+                        data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                         Categorías
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#" disable>Temas</a>
-                        <a class="dropdown-item" href="#">Artes</a>
-                        <a class="dropdown-item" href="#">Matemáticas</a>
-                        <a class="dropdown-item" href="#">Programación</a>
-                        <a class="dropdown-item" href="#">Ciencias</a>
-                        <a class="dropdown-item" href="#">Cotidiano</a>
-                        <a class="dropdown-item" href="#">Libre</a>
-                        <div class="dropdown-divider"></div>
+                    <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+                        <a class='dropdown-item' href="mispreguntas.php">Todas las categorías</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='artes'">Artes</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='matematicas'">Matemáticas</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='programacion'">Programación</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='ciencias'">Ciencias</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='cotidiano'">Cotidiano</a>
+                        <a class='dropdown-item' href="mispreguntas.php?categoria='libre'">Libre</a>
+                        <div class='dropdown-divider'></div>
                     </div>
+
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="mispreguntas.php" id="navbarDropdown" role="button"
@@ -89,30 +90,46 @@ if (isset($_SESSION['nombre'])){
     <section class="listas">
         <div class="list-group">
         <?php
-            if (isset($mensajeError)) {
-                echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
-            }
-            if (isset($mensajeExito)) {
-                echo "<div class='alert alert-success' role='alert'>$mensajeExito</div>";
-            }
-            if (isset($mensajeAviso)) {
-                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
-            }
-
-            $preguntas = Preguntas::obtenerPreguntasUsuario($_SESSION['id']);
-            if($preguntas==false){
-                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+             if(!isset($_GET['categoria'])){ 
+                $preguntas = Preguntas::obtenerPreguntasUsuario($_SESSION['id'],null);
+                if($preguntas==false){
+                        echo "<div class='alert alert-info' role='alert'>No existen preguntas</div>";
+                    
+                }else{
+                    foreach ($preguntas as $pregunta){
+                            $usuario = Usuario::obtenerUsuario(null,$_SESSION['id']);
+                            echo "
+                                <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start ' style='overflow:hidden;'>
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <h5 class='mb-1'>$pregunta->titulo</h5>
+                                        <small>Publicado: $pregunta->fecha_creacion</small>
+                                    </div>
+                                    <p  class='mb-1'>$pregunta->contenido</p>
+                                    <small class='text-muted'>Publicado por: $usuario->nombre.</small>
+                                </a>
+                            ";
+                    }
+                }
             }else{
-                foreach ($preguntas as $pregunta){
-                        echo "
-                            <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start '>
-                                <div class='d-flex w-100 justify-content-between'>
-                                    <h5 class='mb-1'>$pregunta->titulo</h5>
-                                    <small>Hace 3 dias</small>
-                                </div>
-                                <p class='mb-1'>$pregunta->contenido</p>
-                            </a>
-                        ";
+                $preguntas = Preguntas::obtenerPreguntasUsuario($_SESSION['id'],$_GET['categoria']);
+                if($preguntas==false){
+                   
+                        echo "<div class='alert alert-info' role='alert'>No se han hencontrado preguntas de esta categoría </div>";
+                    
+                }else{
+                    foreach ($preguntas as $pregunta){
+                            $usuario = Usuario::obtenerUsuario(null,$_SESSION['id']);
+                            echo "
+                                <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start' style='overflow:hidden;'>
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <h5 class='mb-1'>$pregunta->titulo</h5>
+                                        <small>Publicado:$pregunta->fecha_creacion</small>
+                                    </div>
+                                    <p class='mb-1'>$pregunta->contenido</p>
+                                    <small class='text-muted'>Publicado por: $usuario->nombre.</small>
+                                </a>
+                            ";
+                    }
                 }
             }
         ?>       

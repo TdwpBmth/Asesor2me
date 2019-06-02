@@ -43,7 +43,7 @@ class Preguntas {
         $stmt = $conexion->prepare($sql);
         $stmt->execute();
         $stmt->bind_result($pregunta->id, $pregunta->id_usuario, $pregunta->titulo, $pregunta->contenido, 
-        $pregunta->categoria, $pregunta->fecha_hora_creacion);
+        $pregunta->categoria, $pregunta->fecha_creacion);
         $huboPregunta = $stmt->fetch();
         $stmt->close();
         if(!$huboPregunta){
@@ -66,31 +66,60 @@ class Preguntas {
         $stmt->close();
         return $resultado;
     }
-    public function obtenerAllPreguntas() {
-        $preguntas = array();
-        $conexion = Bd::obtenerConexion();
-        $query = "SELECT id FROM pregunta";
-        $result = $conexion -> query($query);
-        if($result === false) {
-            return false;
+   
+    public function obtenerAllPreguntas($categoria) {
+            $preguntas = array();
+            $conexion = Bd::obtenerConexion();
+            if($categoria==null){
+            $query = "SELECT id FROM pregunta";
+            $result = $conexion -> query($query);
+            if($result === false) {
+                Mensajes::establecerMensajeAviso("No se encuentran preguntas");
+                return false;
+            }
+            while ($row = $result -> fetch_assoc()) {
+                $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+            }
+            return $preguntas;
+        }else{
+            $query = "SELECT id FROM pregunta where categoria = $categoria";
+            $result = $conexion -> query($query);
+            if($result === false) {
+                Mensajes::establecerMensajeAviso("No se encuentran preguntas en esta");
+                return false;
+            }
+            while ($row = $result -> fetch_assoc()) {
+                $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+            }
+            return $preguntas;
         }
-        while ($row = $result -> fetch_assoc()) {
-            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
-        }
-        return $preguntas;
     }
 
-    public function obtenerPreguntasUsuario($id_usuario) {
+    public function obtenerPreguntasUsuario($id_usuario,$categoria) {
+        if($categoria==null){
         $preguntas = array();
         $conexion = Bd::obtenerConexion();
         $query = "SELECT id FROM pregunta where id_usuario = $id_usuario";
         $result = $conexion -> query($query);
         if($result === false) {
             return false;
-        }
-        while ($row = $result -> fetch_assoc()) {
+            }
+            while ($row = $result -> fetch_assoc()) {
             $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+            }
+            return $preguntas;
+        }else{
+            $preguntas = array();
+            $conexion = Bd::obtenerConexion();
+            $query = "SELECT id FROM pregunta where id_usuario = $id_usuario and categoria=$categoria";
+            $result = $conexion -> query($query);
+            if($result === false) {
+                return false;
+            }
+            while ($row = $result -> fetch_assoc()) {
+            $preguntas[] = Preguntas::obtenerPregunta($row['id']);
+            }
+            return $preguntas;
         }
-        return $preguntas;
     }
 }

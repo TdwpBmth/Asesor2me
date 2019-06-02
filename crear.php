@@ -3,7 +3,6 @@ require_once "privado/Mensajes.php";
 $mensajeError = Mensajes::obtenerMensajeError();
 $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
-session_start();
 if (isset($_SESSION['nombre'])){ 
     
     }else{

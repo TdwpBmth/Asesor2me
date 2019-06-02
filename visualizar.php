@@ -74,18 +74,22 @@
     </nav>
 
     <section class="listas">
-        <div class="contenedor-contenido">
+        
                 <?php
                     echo "
                     <div class='form-group'>
-                        <label for='inputTitulo'>$pregunta->titulo</label>
+                    <label>Titulo:</label>
+                        <p>$pregunta->titulo<p>
                     </div>
+                    <div class='contenedor-contenido'>
+                    
                     <div class='form-group'>
-                        <p for='comment'>$pregunta->contenido</p>
+                        <p>$pregunta->contenido</p>
+                    </div>
                     </div>
                     "
                 ?>
-        </div>
+     
             
             <form>
             <div class="detailBox">

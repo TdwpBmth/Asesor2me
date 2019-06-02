@@ -72,15 +72,16 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                         Categorías
                     </a>
                     <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                        <a class='dropdown-item' href='#' disable>Temas</a>
-                        <a class='dropdown-item' href='#'>Artes</a>
-                        <a class='dropdown-item' href='#'>Matemáticas</a>
-                        <a class='dropdown-item' href='#'>Programación</a>
-                        <a class='dropdown-item' href='#'>Ciencias</a>
-                        <a class='dropdown-item' href='#'>Cotidiano</a>
-                        <a class='dropdown-item' href='#'>Libre</a>
+                        <a class='dropdown-item' href="index.php?">Todas las categorías</a>
+                        <a class='dropdown-item' href="index.php?categoria='artes'">Artes</a>
+                        <a class='dropdown-item' href="index.php?categoria='matematicas'">Matemáticas</a>
+                        <a class='dropdown-item' href="index.php?categoria='programacion'">Programación</a>
+                        <a class='dropdown-item' href="index.php?categoria='ciencias'">Ciencias</a>
+                        <a class='dropdown-item' href="index.php?categoria='cotidiano'">Cotidiano</a>
+                        <a class='dropdown-item' href="index.php?categoria='libre'">Libre</a>
                         <div class='dropdown-divider'></div>
                     </div>
+
                 </li>
 
 
@@ -109,25 +110,51 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
     <section class="listas">
         <div class='list-group'>
             <?php
-            $preguntas = Preguntas::obtenerAllPreguntas();
-            if($preguntas==null){
-                echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
+             if (!isset($_GET['categoria'])){ 
+                $preguntas = Preguntas::obtenerAllPreguntas(null);
+                
+                if($preguntas==false){
+                        echo "<div class='alert alert-info' role='alert'>No existen preguntas</div>";
+                    
+                }else{
+                    foreach ($preguntas as $pregunta){
+                            $usuario = Usuario::obtenerUsuario(null,$pregunta->id_usuario);
+                            echo "
+                                <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start ' style='overflow:hidden;'>
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <h5 class='mb-1'>$pregunta->titulo</h5>
+                                        <small>Publicado: $pregunta->fecha_creacion</small>
+                                    </div>
+                                    <p  class='mb-1'>$pregunta->contenido</p>
+                                    <small class='text-muted'>Publicado por: $usuario->nombre.</small>
+                                </a>
+                            ";
+                    }
+                }
             }else{
-                foreach ($preguntas as $pregunta){
-                        echo "
-                            <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start '>
-                                <div class='d-flex w-100 justify-content-between'>
-                                    <h5 class='mb-1'>$pregunta->titulo</h5>
-                                    <small>Hace 3 dias</small>
-                                </div>
-                                <p class='mb-1'>$pregunta->contenido</p>
-                            </a>
-                        ";
+                $preguntas = Preguntas::obtenerAllPreguntas($_GET['categoria']);
+                if($preguntas==false){
+                   
+                        echo "<div class='alert alert-info' role='alert'>No se han hencontrado preguntas de esta categoría </div>";
+                    
+                }else{
+                    foreach ($preguntas as $pregunta){
+                            $usuario = Usuario::obtenerUsuario(null,$pregunta->id_usuario);
+                            echo "
+                                <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start' style='overflow:hidden;'>
+                                    <div class='d-flex w-100 justify-content-between'>
+                                        <h5 class='mb-1'>$pregunta->titulo</h5>
+                                        <small>Publicado:$pregunta->fecha_creacion</small>
+                                    </div>
+                                    <p class='mb-1'>$pregunta->contenido</p>
+                                    <small class='text-muted'>Publicado por: $usuario->nombre.</small>
+                                </a>
+                            ";
+                    }
                 }
             }
         ?>
         </div>
     </section>
-</body>
-
+</body>    
 </html>
