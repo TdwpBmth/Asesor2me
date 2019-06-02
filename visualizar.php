@@ -1,5 +1,6 @@
 <?php
     require_once "privado/cargartodo.php";
+    $pregunta = Preguntas::obtenerPregunta($_GET['id']);
 ?>
 <!DOCTYPE html>
 <html lang="es">

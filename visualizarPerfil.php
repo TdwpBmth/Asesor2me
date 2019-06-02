@@ -3,14 +3,13 @@ require_once 'privado/cargartodo.php';
 $mensajeError = Mensajes::obtenerMensajeError();
 $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
-if ($_SESSION['nombre']!=$_GET['usuario']){ 
-    $usuario = Usuario::obtenerUsuario(null,$_GET['usuario']);
-    echo $usuario->nombre;
-    // if($usuario=-1){
-    //     header("Location: perfil.php");
-    // }
-}else{
-    //header("Location: perfil.php");
+$usuario = Usuario::obtenerUsuario(null,$_GET['usuario']);
+if($usuario==-1){
+        header("Location: perfil.php");
+    }
+if ($_SESSION['nombre']==$usuario->nombre){ 
+    header("Location: perfil.php");
+   
 }
 ?>
 <!DOCTYPE html>
