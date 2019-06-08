@@ -4,8 +4,8 @@ $mensajeError = Mensajes::obtenerMensajeError();
 $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
 if (isset($_SESSION['nombre'])){ 
-    $usuario = Usuario::obtenerUsuario($_SESSION['correo'],$_SESSION['id']);
-    
+    $usuario = Usuario::obtenerUsuario($_SESSION['id']);
+
     }else{
         header("Location: index.php");
     }
@@ -29,15 +29,13 @@ if (isset($_SESSION['nombre'])){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="js/index.js">
-    </script>
-    <script src="js/perfil.js">
-    </script>
+   
+   
 </head>
 
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
+        <a class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -158,7 +156,8 @@ if (isset($_SESSION['nombre'])){
             </div>
         </div>
     </div>
-
+    <script src="js/index.js"></script>
+    <script src="js/perfil.js"></script>
 </body>
 
 

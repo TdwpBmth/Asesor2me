@@ -2,6 +2,9 @@
     --input-padding-x: 1.5rem;
     --input-padding-y: .75rem;
   }
+  #miniLogo{
+    width: 200px; height: 45px;
+  }
   
   body {
     background: #343a40;
@@ -117,22 +120,30 @@
   }
 
   .listas{
-    margin: 5%;
+    margin: 6%;
+    margin-top: 90px;
   }
  
   @media screen and (max-width:1190px){
     .listas{
-        margin: 6%;
-        margin-top: 60px;
+        margin: 8%;
+        margin-top: 90px;
       }
 
       .contenedor-crear{
         margin: 0;
+        
       }
   }
   @media screen and (max-width:1000px){
     .listas{
-        margin: 7%;
-        margin-top: 60px;
+        margin: 9%;
+        margin-top: 90px;
+      }
+  }
+  @media screen and (max-width:900px){
+    .listas{
+        margin: 9%;
+        margin-top: 90px;
       }
   }

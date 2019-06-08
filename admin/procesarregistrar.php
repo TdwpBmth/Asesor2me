@@ -1,6 +1,6 @@
 <?php
-require_once 'privado/cargartodo.php';
-if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrasenia']) && isset($_POST['edad']) && isset($_POST['contrasenia']))
+require_once '../privado/cargartodo.php';
+if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrasenia']) && isset($_POST['edad']))
 { 
     $usuario = new Usuario($_POST['correo'], $_POST['nombre'], $_POST['contrasenia'], $_POST['edad'] );
     
@@ -23,7 +23,7 @@ if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrase
     switch($respuesta){
         case Usuario::ERROR:
             Mensajer::establecerMensajeError("Sucedió un error.</br>Inténtalo más tarde.");
-            header("Location: registro.php");
+            header("Location: registrar.php");
             break;
         case Usuario::EXITO:
             $server = $_SERVER["HTTP_HOST"];
@@ -34,15 +34,15 @@ if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrase
             . "http://$server/mislistas/verificar.php?cadena_verificacion=$usuario->codigoVerificacion</a>";
 
             if (enviarCorreo($usuario->correo, 'Nuevo usuario preregistrado', $asunto, $cuerpo)) {
-                Mensajes::establecerMensajeExito("Estás a un paso de completar el registro.Se un correo electrónico para confirmar la cuenta.");
-                header("Location: login.php");
+                Mensajes::establecerMensajeExito("Estás a un paso de completar el registro.Se envío a tu correo electrónico un enlace para confirmar tu cuenta.");
+                header("Location: index.php");
             } else {
                 Mensajes::establecerMensajeError("Sucedió un error al enviar el correo de verificación.</br>Intenta el registro de nuevo.");
-                header("Location: registro.php");
+                header("Location: registrar.php");
             }
             break;
     }
 }else{
     Mensajes::establecerMensajeError("Ups, parece que los datos que ingresaste etstan incorrectos.</br>Intenta el registro de nuevo.");
-    header("Location: registro.php");
+    header("Location: registrar.php");
 }
