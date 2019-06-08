@@ -1,0 +1,69 @@
+.opciones{
+    margin: 2%;
+    margin-top: 6%;
+    
+}
+.botones{
+    max-width: 20%;
+}
+.contenedor-menu{
+    background-color: white;
+}
+.contenedor-usuarios{
+    margin-top: 2px;
+}
+.danger{
+    color: red;
+}
+
+.contenedor-principal{
+    margin-top: 100px;
+}
+.contenedor-usuarios{
+    height:500px;
+    overflow: auto;
+}
+@media screen and (max-width:500px){
+    .contenedor-derecha{
+        position: absolute;
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 30%;
+    }
+    .contenedor-menu{
+        width: 400px;
+    }
+    .contenedor-usuarios{
+        width: 400px;
+        overflow: auto;
+        }
+    .opciones-d{
+        width: 400px;
+    }
+    .col-4 {
+        flex: 400px;
+        max-width: 500px;
+    }
+    @media screen and (max-width:400px){
+        .contenedor-derecha{
+            position: absolute;
+            width: 420px;
+            margin: 0 auto;
+            margin-top: 30%;
+        }
+        .contenedor-menu{
+            width: 320px;
+        }
+        .contenedor-usuarios{
+            width: 320px;
+            overflow: scroll;
+        }
+        .opciones-d{
+            width: 320px;
+        }
+        .col-4 {
+            flex: 320px;
+            max-width: 500px;
+        }
+    } 
+  }

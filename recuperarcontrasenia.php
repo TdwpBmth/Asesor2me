@@ -33,7 +33,7 @@ if (isset($_SESSION['nombre'])){
 
 <body>
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
+                <a class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">

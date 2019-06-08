@@ -1,4 +1,5 @@
 <?php
+include_once "privado/cargartodo.php";
 session_start();
 
 /*unset($_SESSION["nombre"]);
@@ -10,5 +11,5 @@ session_unset();
 
 // Destroy the session.
 session_destroy();
-
-header("location: index.php");
+Mensajes::establecerMensajeAviso('Se ha cerrado la sesión');
+header("location: login.php");

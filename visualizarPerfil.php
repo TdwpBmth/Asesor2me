@@ -3,13 +3,17 @@ require_once 'privado/cargartodo.php';
 $mensajeError = Mensajes::obtenerMensajeError();
 $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
-$usuario = Usuario::obtenerUsuario(null,$_GET['usuario']);
+$usuario = Usuario::obtenerUsuario($_GET['usuario']);
+$nombre = $usuario->nombre;
+if(isset($_SESSION['nombre'])){
 if($usuario==-1){
         header("Location: perfil.php");
     }
-if ($_SESSION['nombre']==$usuario->nombre){ 
+if ($_SESSION['nombre']==$nombre){ 
     header("Location: perfil.php");
    
+}}else{
+    header('Location:' . getenv('HTTP_REFERER'));
 }
 ?>
 <!DOCTYPE html>
@@ -37,7 +41,7 @@ if ($_SESSION['nombre']==$usuario->nombre){
 
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
+        <a class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

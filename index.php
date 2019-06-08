@@ -27,7 +27,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
 
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
+        <a  class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -118,7 +118,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                     
                 }else{
                     foreach (array_reverse($preguntas) as $pregunta){
-                            $usuario = Usuario::obtenerUsuario(null,$pregunta->id_usuario);
+                            $usuario = Usuario::obtenerUsuario($pregunta->id_usuario);
                             echo "
                                 <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start ' style='overflow:hidden;'>
                                     <div class='d-flex w-100 justify-content-between'>
@@ -139,7 +139,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                     
                 }else{
                     foreach ($preguntas as $pregunta){
-                            $usuario = Usuario::obtenerUsuario(null,$pregunta->id_usuario);
+                            $usuario = Usuario::obtenerUsuario($pregunta->id_usuario);
                             echo "
                                 <a href='visualizar.php?id=$pregunta->id' class='list-group-item list-group-item-action flex-column align-items-start' style='overflow:hidden;'>
                                     <div class='d-flex w-100 justify-content-between'>

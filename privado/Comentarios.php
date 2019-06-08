@@ -56,7 +56,7 @@ class Comentarios {
         if(!$realizo){
             return self::ERROR;
         }else{
-            return self::Exito;
+            return true;
         }
     }
     public function crearComentario() {

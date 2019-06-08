@@ -1,4 +1,5 @@
 <?php
+session_start();
     require_once "privado/cargartodo.php";
     $pregunta = Preguntas::obtenerPregunta($_GET['id']);
 ?>
@@ -26,7 +27,7 @@
 
 <body>
     <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.php"><img src="img/mini-logo.png"></a>
+        <a class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -63,8 +64,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <button type="button" class="btn btn-outline-info">Editar</button>
-                            <button type="button" class="btn btn-outline-danger">Cerrar sesión</button>
+                            <?php if(isset($_SESSION['id'])){
+                                    if($pregunta->id_usuario===$_SESSION['id']){
+                                       echo"<button type='button' class='btn btn-outline-info'>Editar</button>";
+                                        } 
+                            }?>
+                            <button id="btnCerrarSesion" type="button" class="btn btn-outline-danger">Cerrar sesión</button>
                         </li>
                     </ul>
                 </div>
@@ -73,7 +78,7 @@
         </div>
     </nav>
 
-    <section class="listas">
+    <section class="listas listasVisualizar">
         
                 <?php
                 
@@ -88,10 +93,9 @@
                         <p>$pregunta->contenido</p>
                     </div>
                     </div>
-                    "
+                    ";
                 ?>
      
-            
       
             <div class="detailBox">
                 <div class="titleBox">
@@ -99,33 +103,16 @@
                    
                 </div>
 
-                <div class="actionBox">
+               <div class="actionBox">
                     <ul id="listaComentarios" class="commentList">
                         
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/45/45" />
-                            </div>
-                            <div class="commentText">
-                                <p class="">Hello this is a test comment and this comment is particularly very long and
-                                    it goes on and on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/40/40" />
-                            </div>
-                            <div class="commentText">
-                                <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th,
-                                    2014</span>
-
-                            </div>
-                        </li>
+                       
                     </ul>
                     
                 </div>
                <?php
+               
+                if (isset($_SESSION['nombre'])){
                 echo"
                 <div class='contenedor'>
                    
@@ -138,93 +125,31 @@
                     
                 </div>
                 <input id='idPreguntaActual' type='text' hidden value='$pregunta->id'>
+                ";  
+               }else{
+                echo"
+                <div class='contenedor'>
+                   
+                        <div class='form-group'>
+                            <input required id='txtBoxComentario' name='comentario' class='form-control' type='text' placeholder='Tu comentario' />
+                        </div>
+                        <div class='form-group'>
+                            <button id='btnIniciarSesion' type='button' class='btn btn-success'>Iniciar sesión</button>
+                            <button id='btnRegistrarse' type='button' class='btn btn-primary'>Registrarse</button>
+                        </div>
+                    
+                </div>
+                <input id='idPreguntaActual' type='text' hidden value='$pregunta->id'>
                 ";
-
+               }
                ?>
                 
             </div>
-
-       
-
     </section>
 
 </body>
-<script>
-    var httpRequest;
-
-    function solicitarComentarios() {
-        var preguntaid = document.querySelector("#idPreguntaActual").value;
-        httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = cargarPreguntas;
-        httpRequest.open("POST", 'obtenercomentarios.php');
-        httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        httpRequest.send('pregunta=' + preguntaid);
-        httpRequest.timeout = 2000;
-        httpRequest.ontimeout = function (e) {
-            //document.querySelector("#horoscopo").innerHTML = "El servidor está ocupado, inténtalo más tarde.";
-        };
-
-
-        //document.querySelector("#horoscopo").innerHTML = "Cargando...";
-    }
-
-    function cargarPreguntas() {
-        if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            if (httpRequest.status === 200) {
-                
-                if(httpRequest.responseText!="exito"){
-                    document.getElementById("listaComentarios").innerHTML=httpRequest.responseText;
-                    inciarListener();
-                }else{
-                    document.getElementById('txtBoxComentario').value="";
-                    
-                    solicitarComentarios();
-                    
-                }
-                
-            } else {                 
-                //document.querySelector("#horoscopo").innerHTML = "Hubo un error";
-            }
-            
-        }
-    }
-
-    function inciarListener(){
-        var imgUsuario = document.getElementsByClassName('imgUsuario'); 
-        var idUsuarioComentario = document.getElementsByClassName("idUsuarioComentario");
-        for (let i = 0; i < imgUsuario.length; i++) {
-            imgUsuario[i].addEventListener('click', function(){
-            window.location = "visualizarPerfil.php?usuario="+idUsuarioComentario[i].value;
-        })
-            
-        }
-        
-    }
-
-    function irUsuario(){
-        
-    }
-
-    function inicializar(){
-        solicitarComentarios();
-        var btnComentar = document.getElementById('btnComentar');
-        btnComentar.addEventListener('click', function(){
-        var contenido=document.getElementById('txtBoxComentario').value;
-        var preguntaid = document.querySelector("#idPreguntaActual").value;
-        if(contenido!=""){
-        httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = cargarPreguntas;
-        httpRequest.open("POST", 'procesarcomentario.php?id_pregunta='+preguntaid);
-        httpRequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        httpRequest.send('comentario=' + contenido);
-        httpRequest.timeout = 2000;
-        httpRequest.ontimeout = function (e) {
-            //document.querySelector("#horoscopo").innerHTML = "El servidor está ocupado, inténtalo más tarde.";
-            }
-        }
-        });        
-    }
-    window.onload = inicializar;
+<script src="js/visualizar.js">
+   
 </script>
 
 </html>

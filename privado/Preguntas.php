@@ -67,7 +67,7 @@ class Preguntas {
         return $resultado;
     }
    
-    public function obtenerAllPreguntas($categoria) {
+    public static function obtenerAllPreguntas($categoria) {
             $preguntas = array();
             $conexion = Bd::obtenerConexion();
             if($categoria==null){
@@ -95,7 +95,7 @@ class Preguntas {
         }
     }
 
-    public function obtenerPreguntasUsuario($id_usuario,$categoria) {
+    public static function obtenerPreguntasUsuario($id_usuario,$categoria) {
         if($categoria==null){
         $preguntas = array();
         $conexion = Bd::obtenerConexion();

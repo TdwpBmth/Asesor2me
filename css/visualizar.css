@@ -76,6 +76,13 @@ border: black;
 background-color: white;
 
 }
+.listasVisualizar{
+    margin-top:0;
+}
 #imgUsuario:hover{
+    cursor: pointer;
+}
+.btnEliminar{
+    color: red;
     cursor: pointer;
 }

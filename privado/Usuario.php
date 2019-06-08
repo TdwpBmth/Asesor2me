@@ -156,7 +156,6 @@ class Usuario
         $stmt -> execute();
         $stmt -> bind_result($verificado, $nombre, $id, $contraseniaBD);
         $huboRegistros = $stmt -> fetch();
-        echo $huboRegistros;
         $stmt -> close();
         if (!$huboRegistros || !password_verify($contrasenia, $contraseniaBD)) {
             $resultado = self::DATOS_INCORRECTOS;
@@ -185,36 +184,13 @@ class Usuario
      * @param string correo Correo a partir del cual se obtendrá el usuario
      * @return Usuario int retorna un objeto de tipo usuario si se encontró, en caso contrario retorna USUARIO_NO_ENCONTRADO
      */
-    public static function obtenerUsuario($correo,$id_usuario) {
-        if($correo!=null){
-        $usuario = new Usuario("", "", "", "");
-        $sql = "SELECT id, correo, nombre, tipo, edad,foto,
-        verificado, codigo_verificacion, fecha_hora_registro, codigo_recuperacion, fecha_hora_recuperacion FROM USUARIOS WHERE CORREO = '$correo'
-        ";
+    public static function obtenerUsuario($id_usuario) {
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion -> prepare($sql);
-        $stmt -> execute();
-        $stmt -> bind_result($usuario -> id, $usuario -> correo, $usuario -> nombre, $usuario -> tipo,
-            $usuario -> edad, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,
-            $usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion);
-        $huboUsuario = $stmt -> fetch();
-        $stmt -> close();
-        if (!$huboUsuario) {
-            return self::USUARIO_NO_ENCONTRADO;
-        } else {
-            return $usuario;
-        }
-    }else{
         $usuario = new Usuario("", "", "", "");
-        $sql = "SELECT id, correo, nombre, tipo, edad,foto,
-        verificado, codigo_verificacion, fecha_hora_registro, codigo_recuperacion, fecha_hora_recuperacion FROM USUARIOS WHERE id = '$id_usuario'
-        ";
-        $conexion = Bd::obtenerConexion();
-        $stmt = $conexion -> prepare($sql);
+        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion`, `edad` FROM `usuarios` WHERE id=?");
+        $stmt -> bind_param('i',$id_usuario);
         $stmt -> execute();
-        $stmt -> bind_result($usuario -> id, $usuario -> correo, $usuario -> nombre, $usuario -> tipo,
-            $usuario -> edad, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,
-            $usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion);
+        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion,$usuario -> edad);
         $huboUsuario = $stmt -> fetch();
         $stmt -> close();
         if (!$huboUsuario) {
@@ -223,18 +199,22 @@ class Usuario
             return $usuario;
         }
     }
-    }
-    public static
-    function borrarUsuario($correo) {
+    public static function obtenerUsuarioCorreo($correo) {
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion -> prepare("DELETE FROM usuarios WHERE correo = ?");
-        $stmt -> bind_param('s', $correo);
+        $usuario = new Usuario("", "", "", "");
+        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion`, `edad` FROM `usuarios` WHERE correo=?");
+        $stmt -> bind_param('s',$correo);
         $stmt -> execute();
+        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion,$usuario -> edad);
+        $huboUsuario = $stmt -> fetch();
         $stmt -> close();
+        if (!$huboUsuario) {
+            return self::USUARIO_NO_ENCONTRADO;
+        } else {
+            return $usuario;
+        }
     }
-
-   
-    public static function actualizarDatos($nombre, $edad, $foto, $cotrasenianueva, $correoUsuario) {
+    public static function actualizarDatos($nombre, $edad, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id) {
         if ($foto!=null) {
             //actualizar la foto
             $conexion = Bd::obtenerConexion();
@@ -245,6 +225,16 @@ class Usuario
                 return true;
             }
 
+        }elseif ($nombre!=null&&$id!=null&&$edad!=null&&$correoUsuario!=null&&$verificado!=null) {
+            $resultado = true;
+            $conexion = Bd::obtenerConexion();
+            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',edad='$edad',correo='$correoUsuario',verificado='$verificado' WHERE id = '$id'");
+            if (!$huboRegistros) {
+                $resultado = false;
+            }else {
+            $resultado = true;
+            }
+            return $resultado;
         }
         elseif($edad!= null) {
             //actualizar edad
@@ -274,4 +264,34 @@ class Usuario
             //actualizar contrasenia
         }
     }
+    public static
+    function borrarUsuario($correo) {
+        $conexion = Bd::obtenerConexion();
+        $stmt = $conexion -> prepare("DELETE FROM usuarios WHERE correo = ?");
+        $stmt -> bind_param('s', $correo);
+        $stmt -> execute();
+        $stmt -> close();
+    }
+    public static function borrarUsuarioId($id){
+        $conexion = Bd::obtenerConexion();
+        $stmt = $conexion -> prepare("DELETE FROM usuarios WHERE id = ?");
+        $stmt -> bind_param('i', $id);
+        $stmt -> execute();
+        $stmt -> close();
+        return true;     
+    }
+    public static function obtenerAllUsuarios() {
+        $usuarios = array();
+        $conexion = Bd::obtenerConexion();
+        $query = "SELECT id FROM usuarios";
+        $result = $conexion -> query($query);
+        if($result === false) {
+            Mensajes::establecerMensajeAviso("No existen usuarios registrados");
+            return false;
+        }
+        while ($row = $result -> fetch_assoc()) {
+            $usuarios[] = Usuario::obtenerUsuario($row['id']);
+        }
+        return $usuarios;
+}
 }
