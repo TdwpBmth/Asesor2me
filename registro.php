@@ -5,17 +5,15 @@ $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
 if (isset($_SESSION['nombre'])){ 
     header("Location: index.php");
-    
-    }else{
-        
+    }else{   
     }		    
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="418889213372-ajv7o8h2q8tk42qhk9ilq6348flekm22.apps.googleusercontent.com">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilo.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -28,6 +26,8 @@ if (isset($_SESSION['nombre'])){
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="js/index.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="js/registro.js"></script>
     <title>Registro</title>
 </head>
 
@@ -88,8 +88,8 @@ if (isset($_SESSION['nombre'])){
                                 <p>O</p>
                             </div>
                             <hr class="my-4">
-                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-google mr-2"></i> Registrase con Google</button>
+                            <div style=" display: flex;justify-content: center;align-items: center;" class="g-signin2" data-onsuccess="onSignIn"></div>
+
                             <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
                                     class="fab fa-facebook-f mr-2"></i> Registrarse con Facebook</button>
                         </form>

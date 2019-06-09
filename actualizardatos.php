@@ -1,9 +1,8 @@
 <?php
 require_once 'privado/cargartodo.php';
-if (session_start() && isset($_SESSION['nombre'])){ 
-    
+if (session_start() && isset($_SESSION['nombre'])){     
     if(isset($_POST['nombre'])){
-        $respuesta = Usuario::actualizarDatos($_POST['nombre'],null,null,null,$_SESSION['correo']);
+        $respuesta = Usuario::actualizarDatos($_POST['nombre'],null,null,null,$_SESSION['correo'],null,null);
         if($respuesta == false){
             Mensajes::establecerMensajeError('No se pudieron actualizar los datos. Intentalo de nuevo');
             header("Location: perfil.php");
@@ -11,9 +10,8 @@ if (session_start() && isset($_SESSION['nombre'])){
             Mensajes::establecerMensajeExito('Se actualizaron los datos correctamente');
             header("Location: perfil.php");
         }
-
     }elseif (isset($_POST['edad'])) {
-        $seActualizo = Usuario::actualizarDatos(null,$_POST['edad'],null,null,$_SESSION['correo']);
+        $seActualizo = Usuario::actualizarDatos(null,$_POST['edad'],null,null,$_SESSION['correo'],null,null);
         if ($seActualizo) {
             Mensajes::establecerMensajeExito('Se actualizaron los datos correctamente');
             header("Location: perfil.php");
@@ -39,7 +37,7 @@ if (session_start() && isset($_SESSION['nombre'])){
                 ($_FILES["imagen"]["type"] == "image/png")) {
                 // Muevo la imagen desde el directorio temporal a nuestra ruta indicada anteriormente
                 if(move_uploaded_file($_FILES['imagen']['tmp_name'], $directorio.$newname)){
-                    $seActualizo = Usuario::actualizarDatos(null,null,$directorio.$newname,null,$_SESSION['correo']);
+                    $seActualizo = Usuario::actualizarDatos(null,null,$directorio.$newname,null,$_SESSION['correo'],null,null);
                     if ($seActualizo) {
                         Mensajes::establecerMensajeExito('Se actualizaron los datos correctamente');
                         header("Location: perfil.php");
@@ -47,18 +45,15 @@ if (session_start() && isset($_SESSION['nombre'])){
                         Mensajes::establecerMensajeError('Se produjo un error al subir la imagen. Intentalo de nuevo');
                         header("Location: perfil.php");
                     }
-
                 }else{
                     Mensajes::establecerMensajeError("Se ha producido un error al subir la imagen");
                     header("Location: perfil.php");
                 }
             } else {
-                //si no cumple con el formato
                 Mensajes::establecerMensajeError("No se puede subir una imagen con ese formato");
                 header("Location: perfil.php");
             }
         } else {
-            //si existe la variable pero se pasa del tamaño permitido
             if ($nombre_img == !NULL){
                 Mensajes::establecerMensajeError("La imagen es demasiado grande");
                 header("Location: perfil.php");

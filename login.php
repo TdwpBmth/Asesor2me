@@ -5,19 +5,19 @@ $mensajeExito = Mensajes::obtenerMensajeExito();
 $mensajeAviso = Mensajes::obtenerMensajeAviso();
 if (isset($_SESSION['nombre'])){ 
     header("Location: index.php");
-    
-    }else{
-        
+    }else{    
     }		    
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="google-signin-client_id" content="418889213372-ajv7o8h2q8tk42qhk9ilq6348flekm22.apps.googleusercontent.com">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilo.css">
+ 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -28,10 +28,13 @@ if (isset($_SESSION['nombre'])){
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="js/index.js"></script>
+    <script src="js/login.js"> </script>
     <title>Iniciar sesión</title>
 </head>
 
 <body>
+<div id="fb-root"></div>
+
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="index.php"><img id="miniLogo" src="img/mini-logo.png"></a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -49,7 +52,12 @@ if (isset($_SESSION['nombre'])){
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Iniciar sesión</h5>
-                        <?php
+                        <?php                        
+                           if(isset($_GET['cerrar'])){
+                            echo"
+                            <p id='cerrar'hidden>Sign out</p>
+                            ";
+                            }                    
                             if (isset($mensajeError)) {
                                 echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
                             }
@@ -59,7 +67,6 @@ if (isset($_SESSION['nombre'])){
                             if (isset($mensajeAviso)) {
                                 echo "<div class='alert alert-info' role='alert'>$mensajeAviso</div>";
                             }
-
                             ?>
                         <form class="form-signin" action="procesarlogin.php" method="POST">
                             <div class="form-label-group">
@@ -78,10 +85,8 @@ if (isset($_SESSION['nombre'])){
                                     <p>O</p>
                                 </div>
                             <hr class="my-4">
-                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-google mr-2"></i> Continuar con Google</button>
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-facebook-f mr-2"></i> Continuar con Facebook</button>
+                            <div style=" display: flex;justify-content: center;align-items: center;" class="g-signin2" data-onsuccess="onSignIn"></div>
+
                                     <div style="text-align:center;" class="my-3">
                                                 <a  href="recuperarcontrasenia.php">¿Has olvidado la contraseña?</a>
                                         </div>

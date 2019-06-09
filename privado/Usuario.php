@@ -147,8 +147,7 @@ class Usuario
         return $resultado;
     }
 
-    public static
-    function iniciarSesion($correo, $contrasenia) {
+    public static function iniciarSesion($correo, $contrasenia) {
         $resultado = self::EXITO;
         $conexion = Bd::obtenerConexion();
         $stmt = $conexion -> prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
@@ -158,6 +157,32 @@ class Usuario
         $huboRegistros = $stmt -> fetch();
         $stmt -> close();
         if (!$huboRegistros || !password_verify($contrasenia, $contraseniaBD)) {
+            $resultado = self::DATOS_INCORRECTOS;
+        } else if ($verificado == 0) {
+            $resultado = self::USUARIO_NO_VERIFICADO;
+        } else {
+            $resultado = self::EXITO;
+            if (session_status() != PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+            $_SESSION["nombre"] = $nombre;
+            $_SESSION["id"] = $id;
+            $_SESSION["correo"] = $correo;
+        }
+
+        return $resultado;
+    }
+
+    public static function iniciarSesionGoogle($correo) {
+        $resultado = self::EXITO;
+        $conexion = Bd::obtenerConexion();
+        $stmt = $conexion -> prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
+        $stmt -> bind_param('s', $correo);
+        $stmt -> execute();
+        $stmt -> bind_result($verificado, $nombre, $id, $contraseniaBD);
+        $huboRegistros = $stmt -> fetch();
+        $stmt -> close();
+        if (!$huboRegistros) {
             $resultado = self::DATOS_INCORRECTOS;
         } else if ($verificado == 0) {
             $resultado = self::USUARIO_NO_VERIFICADO;
