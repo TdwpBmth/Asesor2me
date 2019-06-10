@@ -1,5 +1,9 @@
 <?php
-require_once "privado/Mensajes.php";		    
+require_once "privado/cargartodo.php";
+if(Usuario::obtenerUsuarioCorreo($_GET['correo'])!= Usuario::USUARIO_NO_ENCONTRADO){
+   
+            header("Location: index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -30,7 +34,7 @@ require_once "privado/Mensajes.php";
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Establecer contraseña</h5>
-                        nombre correo imagen
+              
                         <?php
                         $nombre = $_GET['nombre'];
                         $correo = $_GET['correo'];

@@ -1,6 +1,6 @@
 <?php
 include_once '../privado/cargartodo.php';
-$actualizar = Usuario::actualizarDatos($_POST['nombre'],$_POST['edad'],null,null,$_POST['correo'],$_POST['verificado'],$_POST['id']);
+$actualizar = Usuario::actualizarDatosAdmin($_POST['nombre'],$_POST['edad'],null,null,$_POST['correo'],$_POST['verificado'],$_POST['id'],$_POST['tipo']);
 if($actualizar){
     Mensajes::establecerMensajeExito('Se han actualizado los datos');
     header("Location:index.php");

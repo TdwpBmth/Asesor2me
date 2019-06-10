@@ -89,9 +89,6 @@ if (isset($_SESSION['nombre'])){
                             </div>
                             <hr class="my-4">
                             <div style=" display: flex;justify-content: center;align-items: center;" class="g-signin2" data-onsuccess="onSignIn"></div>
-
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i
-                                    class="fab fa-facebook-f mr-2"></i> Registrarse con Facebook</button>
                         </form>
                     </div>
                 </div>

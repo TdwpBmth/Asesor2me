@@ -26,7 +26,8 @@ require_once 'privado/cargartodo.php';
             $asunto = "Por favor completa el registro";
             $cuerpo = "Tu correo ha sido registrado en la pagina de Asesor2me. Por favor completa tu registro verificando tu cuenta</br></br>"
             . "Por favor ingresa al siguiente enlace:</br>"
-            . "<a href='https://$server/verificar.php?cadena_verificacion=$usuario->codigoVerificacion'>";
+           . "<a href='http://$server/verificar.php?cadena_verificacion=$usuario->codigoVerificacion'>"
+            . "http://$server/verificar.php?cadena_verificacion=$usuario->codigoVerificacion</a>";
             if (enviarCorreo($usuario->correo, 'Nuevo usuario preregistrado', $asunto, $cuerpo)) {
                 Mensajes::establecerMensajeExito("Estás a un paso de completar el registro.Se un correo electrónico para confirmar la cuenta.");
                 header("Location: login.php");

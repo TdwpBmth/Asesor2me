@@ -289,6 +289,64 @@ class Usuario
             //actualizar contrasenia
         }
     }
+
+
+    public static function actualizarDatosAdmin($nombre, $edad, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id,$tipo) {
+        if ($foto!=null) {
+            //actualizar la foto
+            $conexion = Bd::obtenerConexion();
+            $huboUsuario = $conexion -> query("UPDATE usuarios SET foto = '$foto' WHERE correo = '$correoUsuario'");
+            if (!$huboUsuario) {
+                return false;
+            } else {
+                return true;
+            }
+
+        }elseif ($nombre!=null&&$id!=null&&$edad!=null&&$correoUsuario!=null&&$verificado!=null) {
+            $resultado = true;
+            $conexion = Bd::obtenerConexion();
+            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',edad='$edad',correo='$correoUsuario',verificado='$verificado',tipo ='$tipo' WHERE id = '$id'");
+            if (!$huboRegistros) {
+                $resultado = false;
+            }else {
+            $resultado = true;
+            }
+            return $resultado;
+        }
+        elseif($edad!= null) {
+            //actualizar edad
+                $conexion = Bd::obtenerConexion();
+                $huboUsuario = $conexion -> query("UPDATE usuarios SET edad = '$edad' WHERE correo = '$correoUsuario'");
+                if (!$huboUsuario) {
+                    return false;
+                } else {
+                    return true;
+                }
+            
+        }
+        elseif($nombre!= null) {
+            //actualizar nombre
+            $resultado = true;
+            $conexion = Bd::obtenerConexion();
+            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre' WHERE correo = '$correoUsuario'");
+            if (!$huboRegistros) {
+                $resultado = false;
+            }else {
+            $resultado = true;
+            }
+    
+            return $resultado;
+        }
+        else {
+            //actualizar contrasenia
+        }
+    }
+
+
+
+
+
+
     public static
     function borrarUsuario($correo) {
         $conexion = Bd::obtenerConexion();

@@ -71,7 +71,7 @@ if(isset($_SESSION['nombre'])){
                         <a class='dropdown-item' href='../mispreguntas.php'>Mis pregutas</a>
                         <div class='dropdown-divider'></div>
                     </div>
-                </li>"
+                </li>
                 <li class='nav-item dropdown '>
                     <a class='nav-link dropdown-toggle' href='../perfil.php' id='navbarDropdown' role='button'
                         data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -170,6 +170,7 @@ if(isset($_SESSION['nombre'])){
                                         <p>Correo: $usu->correo</p>
                                         <p>Edad: $usu->edad</p>
                                         <p>ID: $usu->id</p>
+                                        <p>Tipo: $usu->tipo</p>
                                         <p>Verificado: $verificado </p>
                                         <p>Fecha de registro: $usu->fechaHoraRegistro</p>
                                     </div>

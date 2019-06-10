@@ -13,7 +13,8 @@ if (isset($_SESSION['nombre'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="google-signin-client_id" content="418889213372-ajv7o8h2q8tk42qhk9ilq6348flekm22.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="">
+     <meta name="google-signin-client_id" content="418889213372-ajv7o8h2q8tk42qhk9ilq6348flekm22.apps.googleusercontent.com">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilo.css">
  

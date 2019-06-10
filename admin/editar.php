@@ -135,10 +135,19 @@ if(isset($_SESSION['nombre'])){
                                         placeholder='Correo electrónico' required value='$usuario->correo'>
                                     <label for='inputEmail'>Correo electrónico</label>
                                 </div>
+
                                 <div class='form-label-group'>
                                     <input name='verificado' type='number' id='inputVerificado' class='form-control'
                                         placeholder='Verificado' max='1' min='0' value='$usuario->verificado'required>
                                     <label for='inputVerificado'>Verificado</label>
+                                </div>
+
+                                <div class='form-group'>
+                                <select name='tipo' class='form-control' id='inputTipo'>
+                                    <option value='normal' selected>Normal</option>
+                                    <option value='administrador'>Administrador</option>
+                                  
+                                </select>
                                 </div>
                                 
                                 <button class='btn btn-lg btn-primary btn-block text-uppercase'

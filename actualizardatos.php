@@ -1,5 +1,6 @@
 <?php
 require_once 'privado/cargartodo.php';
+
 if (session_start() && isset($_SESSION['nombre'])){     
     if(isset($_POST['nombre'])){
         $respuesta = Usuario::actualizarDatos($_POST['nombre'],null,null,null,$_SESSION['correo'],null,null);
