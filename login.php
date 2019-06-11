@@ -54,11 +54,8 @@ if (isset($_SESSION['nombre'])){
                     <div class="card-body">
                         <h5 class="card-title text-center">Iniciar sesión</h5>
                         <?php                        
-                           if(isset($_GET['cerrar'])){
-                            echo"
-                            <p id='cerrar'hidden>Sign out</p>
-                            ";
-                            }                    
+                          
+                                              
                             if (isset($mensajeError)) {
                                 echo "<div class='alert alert-danger' role='alert'>$mensajeError</div>";
                             }

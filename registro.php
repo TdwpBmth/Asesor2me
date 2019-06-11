@@ -68,11 +68,6 @@ if (isset($_SESSION['nombre'])){
                                 <label for="inputNombre">Nombre</label>
                             </div>
                             <div class="form-label-group">
-                                <input name="edad" type="number" id="inputEdad" class="form-control" placeholder="Edad"
-                                    required min="15">
-                                <label for="inputEdad">Edad</label>
-                            </div>
-                            <div class="form-label-group">
                                 <input name="correo" type="email" id="inputEmail" class="form-control"
                                     placeholder="Correo electrónico" required>
                                 <label for="inputEmail">Correo electrónico</label>

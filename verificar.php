@@ -3,7 +3,6 @@ require_once "privado/cargartodo.php";
 
 if (isset($_GET["cadena_verificacion"])) {
     $respuesta = Usuario::verificarCorreo($_GET["cadena_verificacion"]);
-
     switch ($respuesta) {
         case Usuario::EXITO:
             Mensajes::establecerMensajeExito("Tu cuenta ha sido verificada, ya puedes iniciar sesión.");
@@ -23,6 +22,6 @@ if (isset($_GET["cadena_verificacion"])) {
             break;
     }    
 } else {
-    Aplicacion::establecerMensajeError("Ups, no se encuentra la cadena de verificación.");
-    header("Location: index.php");
+    Mensajes::establecerMensajeError("Ups, no se encuentra la cadena de verificación.");
+    header("Location: login.php");
 }

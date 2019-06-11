@@ -13,7 +13,6 @@ class Usuario
     public $nombre;
     public $contrasenia;
     public $tipo;
-    public $edad;
     public $foto;
     public $activo;
     public $verificado;
@@ -54,11 +53,11 @@ class Usuario
      * @param string $genero
      * @param string $fechaNacimiento
      */
-    public function __construct($correo, $nombre, $contrasenia, $edad) {
+    public function __construct($correo, $nombre, $contrasenia) {
         $this -> correo = $correo;
         $this -> nombre = $nombre;
         $this -> contrasenia = $contrasenia;
-        $this -> edad = $edad;
+       
     }
 
     /**
@@ -124,15 +123,32 @@ class Usuario
      *
      * @return int EXITO
      */
-    public
-    function preregistrar() {
-        $resultado = self::EXITO;
 
+    public static function guardarRecuperacion($correo){
+        $resultado = self::EXITO;
+        $codigoVerificacion = self::obtenerCodigoUnico("verificacion");
+        $conexion = Bd::obtenerConexion();
+
+        $stmt = $conexion -> prepare("UPDATE usuarios set codigo_recuperacion=? where correo = '$correo'");
+        $stmt -> bind_param('s',$codigoVerificacion);
+        if (!$stmt -> execute()) {
+            $resultado = self::ERROR;
+            if ($conexion -> errno == 1062) {
+                $resultado = self::ERROR_CORREO_DUPLICADO;
+            }
+        }
+
+        $stmt -> close();
+        return $resultado;
+        
+    }
+    public function preregistrar() {
+        $resultado = self::EXITO;
         $this -> codigoVerificacion = self::obtenerCodigoUnico("verificacion");
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion -> prepare("INSERT INTO usuarios(correo,contrasenia,nombre,edad, codigo_verificacion) values (?, ?, ?, ?, ?)");
+        $stmt = $conexion -> prepare("INSERT INTO usuarios(correo,contrasenia,nombre, codigo_verificacion) values (?, ?, ?, ?)");
         $contrasenia = password_hash($this -> contrasenia, PASSWORD_DEFAULT);
-        $stmt -> bind_param('sssis', $this -> correo, $contrasenia, $this -> nombre, $this -> edad, $this -> codigoVerificacion);
+        $stmt -> bind_param('ssss', $this -> correo, $contrasenia, $this -> nombre, $this -> codigoVerificacion);
 
         if (!$stmt -> execute()) {
             $resultado = self::ERROR;
@@ -143,6 +159,22 @@ class Usuario
             }
         }
 
+        $stmt -> close();
+        return $resultado;
+    }
+    public function registrarGoogle() {
+        $resultado = self::EXITO;
+        $v=1;
+        $this -> codigoVerificacion = self::obtenerCodigoUnico("verificacion");
+        $conexion = Bd::obtenerConexion();
+        $stmt = $conexion -> prepare("INSERT INTO usuarios(correo,nombre, verificado) values (?, ?, ?)");
+        $stmt -> bind_param('ssi', $this -> correo, $this -> nombre, $v);
+        if (!$stmt -> execute()) {
+            $resultado = self::ERROR;
+            if ($conexion -> errno == 1062) {
+                $resultado = self::ERROR_CORREO_DUPLICADO;
+            }
+        }
         $stmt -> close();
         return $resultado;
     }
@@ -176,10 +208,10 @@ class Usuario
     public static function iniciarSesionGoogle($correo) {
         $resultado = self::EXITO;
         $conexion = Bd::obtenerConexion();
-        $stmt = $conexion -> prepare("SELECT verificado, nombre, id, contrasenia FROM usuarios WHERE correo = ?");
+        $stmt = $conexion -> prepare("SELECT verificado, nombre, id FROM usuarios WHERE correo = ?");
         $stmt -> bind_param('s', $correo);
         $stmt -> execute();
-        $stmt -> bind_result($verificado, $nombre, $id, $contraseniaBD);
+        $stmt -> bind_result($verificado, $nombre, $id);
         $huboRegistros = $stmt -> fetch();
         $stmt -> close();
         if (!$huboRegistros) {
@@ -212,10 +244,10 @@ class Usuario
     public static function obtenerUsuario($id_usuario) {
         $conexion = Bd::obtenerConexion();
         $usuario = new Usuario("", "", "", "");
-        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion`, `edad` FROM `usuarios` WHERE id=?");
+        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion` FROM `usuarios` WHERE id=?");
         $stmt -> bind_param('i',$id_usuario);
         $stmt -> execute();
-        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion,$usuario -> edad);
+        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion);
         $huboUsuario = $stmt -> fetch();
         $stmt -> close();
         if (!$huboUsuario) {
@@ -227,19 +259,19 @@ class Usuario
     public static function obtenerUsuarioCorreo($correo) {
         $conexion = Bd::obtenerConexion();
         $usuario = new Usuario("", "", "", "");
-        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion`, `edad` FROM `usuarios` WHERE correo=?");
+        $stmt = $conexion->prepare("SELECT `id`, `correo`, `contrasenia`, `tipo`, `nombre`, `foto`, `verificado`, `codigo_verificacion`, `fecha_hora_registro`, `codigo_recuperacion`, `fecha_hora_recuperacion` FROM `usuarios` WHERE correo=?");
         $stmt -> bind_param('s',$correo);
         $stmt -> execute();
-        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion,$usuario -> edad);
+        $stmt -> bind_result($usuario -> id, $usuario -> correo,$usuario->contrasenia, $usuario -> tipo,$usuario -> nombre, $usuario -> foto, $usuario -> verificado, $usuario -> codigoVerificacion, $usuario -> fechaHoraRegistro,$usuario -> codigoRecuperacion, $usuario -> fechaHoraRecuperacion);
         $huboUsuario = $stmt -> fetch();
         $stmt -> close();
         if (!$huboUsuario) {
-            return self::USUARIO_NO_ENCONTRADO;
+            return false;
         } else {
             return $usuario;
         }
     }
-    public static function actualizarDatos($nombre, $edad, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id) {
+    public static function actualizarDatos($nombre, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id) {
         if ($foto!=null) {
             //actualizar la foto
             $conexion = Bd::obtenerConexion();
@@ -250,27 +282,16 @@ class Usuario
                 return true;
             }
 
-        }elseif ($nombre!=null&&$id!=null&&$edad!=null&&$correoUsuario!=null&&$verificado!=null) {
+        }elseif ($nombre!=null&&$id!=null&&$correoUsuario!=null&&$verificado!=null) {
             $resultado = true;
             $conexion = Bd::obtenerConexion();
-            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',edad='$edad',correo='$correoUsuario',verificado='$verificado' WHERE id = '$id'");
+            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',correo='$correoUsuario',verificado='$verificado' WHERE id = '$id'");
             if (!$huboRegistros) {
                 $resultado = false;
             }else {
             $resultado = true;
             }
             return $resultado;
-        }
-        elseif($edad!= null) {
-            //actualizar edad
-                $conexion = Bd::obtenerConexion();
-                $huboUsuario = $conexion -> query("UPDATE usuarios SET edad = '$edad' WHERE correo = '$correoUsuario'");
-                if (!$huboUsuario) {
-                    return false;
-                } else {
-                    return true;
-                }
-            
         }
         elseif($nombre!= null) {
             //actualizar nombre
@@ -291,7 +312,7 @@ class Usuario
     }
 
 
-    public static function actualizarDatosAdmin($nombre, $edad, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id,$tipo) {
+    public static function actualizarDatosAdmin($nombre, $foto, $cotrasenianueva, $correoUsuario,$verificado,$id,$tipo) {
         if ($foto!=null) {
             //actualizar la foto
             $conexion = Bd::obtenerConexion();
@@ -302,29 +323,17 @@ class Usuario
                 return true;
             }
 
-        }elseif ($nombre!=null&&$id!=null&&$edad!=null&&$correoUsuario!=null&&$verificado!=null) {
+        }elseif ($nombre!=null&&$id!=null&&$correoUsuario!=null&&$verificado!=null) {
             $resultado = true;
             $conexion = Bd::obtenerConexion();
-            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',edad='$edad',correo='$correoUsuario',verificado='$verificado',tipo ='$tipo' WHERE id = '$id'");
+            $huboRegistros=$conexion -> query("UPDATE usuarios SET nombre = '$nombre',id='$id',correo='$correoUsuario',verificado='$verificado',tipo ='$tipo' WHERE id = '$id'");
             if (!$huboRegistros) {
                 $resultado = false;
             }else {
             $resultado = true;
             }
             return $resultado;
-        }
-        elseif($edad!= null) {
-            //actualizar edad
-                $conexion = Bd::obtenerConexion();
-                $huboUsuario = $conexion -> query("UPDATE usuarios SET edad = '$edad' WHERE correo = '$correoUsuario'");
-                if (!$huboUsuario) {
-                    return false;
-                } else {
-                    return true;
-                }
-            
-        }
-        elseif($nombre!= null) {
+        }elseif($nombre!= null) {
             //actualizar nombre
             $resultado = true;
             $conexion = Bd::obtenerConexion();
@@ -377,4 +386,24 @@ class Usuario
         }
         return $usuarios;
 }
+    public static function almacenarContrasenia($correo,$contra){
+        $resultado = self::EXITO;
+        $conexion = Bd::obtenerConexion();
+        $contrasenia = password_hash($contra, PASSWORD_DEFAULT);
+        
+        $huboRegistros=$conexion -> query("UPDATE usuarios SET contrasenia ='$contrasenia' WHERE correo = '$correo'");
+        if (!$huboRegistros) {
+            $resultado = false;
+        }
+        return $resultado;
+    }
+    public static function restablecer($correo){
+        $resultado = self::EXITO;
+        $conexion = Bd::obtenerConexion();
+        $huboRegistros=$conexion -> query("UPDATE usuarios SET codigo_recuperacion = null WHERE correo = '$correo'");
+        if (!$huboRegistros) {
+            $resultado = false;
+        }
+        return $resultado;
+    }
 }

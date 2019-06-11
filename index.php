@@ -139,7 +139,7 @@ $mensajeAviso = Mensajes::obtenerMensajeAviso();
                 $preguntas = Preguntas::obtenerAllPreguntas($_GET['categoria']);
                 if($preguntas==false){
                    
-                        echo "<div class='alert alert-info' role='alert'>No se han hencontrado preguntas de esta categoría </div>";
+                        echo "<div class='alert alert-info' role='alert'>No se han encontrado preguntas de esta categoría </div>";
                     
                 }else{
                     foreach ($preguntas as $pregunta){

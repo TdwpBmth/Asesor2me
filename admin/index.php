@@ -168,7 +168,6 @@ if(isset($_SESSION['nombre'])){
                                     <div id='$usu->id' class='card-body'>
                                         <p>Nombre: $usu->nombre</p>
                                         <p>Correo: $usu->correo</p>
-                                        <p>Edad: $usu->edad</p>
                                         <p>ID: $usu->id</p>
                                         <p>Tipo: $usu->tipo</p>
                                         <p>Verificado: $verificado </p>

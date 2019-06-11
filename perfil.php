@@ -118,17 +118,6 @@ if (isset($_SESSION['nombre'])){
                         </div>
                         <hr class="my-1">
                        
-                        
-                        <div>
-                            <div>  <h5>Edad: </h4></div>                          
-                            <div ><img id="edit-icon-edad" class="edit-icon" src="img/edit.png"></div>
-                            <form id="frmEdad" class="ocultar" action="actualizardatos.php" method="POST">
-                                    <div class="form-group"  >
-                                      <input autofocus name="edad" type="text" class="form-control" id="inputEdad" required>
-                                    </div>
-                                </form>
-                                <?php echo "<div id='txtEdad' class='contenedor-dato'> <p id='valorEdad' text-uppercase> $usuario->edad</p></div>" ?>
-                        </div>
                         <hr class="my-1">
                         <div>
                                 <div>  <h5>Correo: </h4></div>                          

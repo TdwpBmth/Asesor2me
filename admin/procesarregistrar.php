@@ -1,12 +1,10 @@
 <?php
 require_once '../privado/cargartodo.php';
-if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrasenia']) && isset($_POST['edad']))
+if (isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrasenia']))
 { 
-    $usuario = new Usuario($_POST['correo'], $_POST['nombre'], $_POST['contrasenia'], $_POST['edad'] );
-    
+    $usuario = new Usuario($_POST['correo'], $_POST['nombre'], $_POST['contrasenia']);
     do {
         $respuesta = $usuario->preregistrar();
-
         if ($respuesta == Usuario::ERROR_CORREO_DUPLICADO) {
             $usuario = Usuario::obtenerUsuario($_POST['correo']);
             if($usuario->verificado){

@@ -17,7 +17,7 @@ if (isset($_POST["correo"]) && isset($_POST["contrasenia"])) {
             
            
         case Usuario::DATOS_INCORRECTOS:
-            Mensajes::establecerMensajeError("Ups, parece que tus datos están incorrectos.");
+            Mensajes::establecerMensajeError("Tus datos estan incorrectos");
             header("Location: login.php");
             break;
         case Usuario::USUARIO_NO_VERIFICADO:

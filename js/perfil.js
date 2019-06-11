@@ -34,17 +34,7 @@ function iniciarlisteners(){
         editarFoto.classList.add('ocultar');
         editarEdad.classList.add('ocultar');
     });
-    editarEdad.addEventListener('click', function () {
-        valorInputEdad=document.getElementById('inputEdad')
-        inputEdad.classList.remove('ocultar');
-        valorInputEdad.setAttribute('placeholder',document.getElementById('valorEdad').textContent);
-        txtEdad.classList.add('ocultar');
-        guardar.removeAttribute('disabled');
-        cancelar.removeAttribute('disabled');
-        editarNombre.classList.add('ocultar');
-        editarFoto.classList.add('ocultar');
-        editarEdad.classList.add('ocultar');
-    });
+   
 
     cancelar.addEventListener('click', function () {
         if(editarFoto.className='ocultar'){

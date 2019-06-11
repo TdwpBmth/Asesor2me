@@ -121,18 +121,6 @@ if ($_SESSION['nombre']==$nombre){
                                     <?php echo "<div id='txtNombre' class='contenedor-dato'> <p id='valorNombre' text-uppercase> $usuario->nombre</p></div>" ?>
                         </div>
                         <hr class="my-1">
-                       
-                        
-                        <div>
-                            <div>  <h5>Edad: </h4></div>                          
-                            <form id="frmEdad" class="ocultar" action="actualizardatos.php" method="POST">
-                                    <div class="form-group"  >
-                                      <input autofocus name="edad" type="text" class="form-control" id="inputEdad" required>
-                                    </div>
-                                </form>
-                                <?php echo "<div id='txtEdad' class='contenedor-dato'> <p id='valorEdad' text-uppercase> $usuario->edad</p></div>" ?>
-                        </div>
-                        <hr class="my-1">
                         <div>
                                 <div>  <h5>Correo: </h4></div>                          
                                 <?php echo "<div class='contenedor-dato'> <p> $usuario->correo</p></div>" ?>
